@@ -1,0 +1,37 @@
+{
+  "name": "nextlake-conference",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . && prettier --check ."
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.19.0",
+    "@nextlake/access": "file:../access",
+    "@nextlake/assets": "git+ssh://git@github.com:adsurg/next-lake-assets.git#main",
+    "@nextlake/editor": "git+ssh://git@github.com:adsurg/next-lake-editor.git#v0.2.0",
+    "@nextlake/media": "git+ssh://git@github.com:adsurg/next-lake-media.git#main",
+    "@nextlake/schema": "git+ssh://git@github.com:adsurg/next-lake-schema-engine.git#v0.2.0",
+    "@nextlake/storage": "git+ssh://git@github.com:adsurg/next-lake-storage-adapter.git#v0.2.0",
+    "next": "^16.1.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@types/node": "^25.3.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "eslint": "^9.39.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.56.1"
+  }
+}

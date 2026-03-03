@@ -1,0 +1,15 @@
+'use client';
+
+import { use } from 'react';
+import { DocumentEditor } from '@/components/admin/DocumentEditor';
+
+export default function EditPagePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = use(params);
+  return (
+    <DocumentEditor blockType="page" documentId={id} backPath="/admin/pages" />
+  );
+}

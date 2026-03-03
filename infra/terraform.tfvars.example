@@ -1,0 +1,8 @@
+project_id       = "my-gcp-project"
+region           = "europe-west2"
+conference_name  = "nextlake-conference"
+alloydb_password = "change-me"
+gcs_bucket_name  = "my-conference-assets"
+google_client_id = "xxx.apps.googleusercontent.com"
+seed_admin_id    = "google-114823947"
+docker_image     = "gcr.io/my-gcp-project/nextlake-conference:latest"
