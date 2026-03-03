@@ -33,23 +33,23 @@ make run              # starts dev server (AUTH_MODE=test by default)
 
 See `.env.example` for the full list. Key variables:
 
-| Variable | Description |
-|----------|-------------|
-| `DATABASE_URL` | Postgres/AlloyDB connection string |
-| `GCS_BUCKET` | Google Cloud Storage bucket for assets |
-| `AUTH_MODE` | Set to `test` for local dev with test accounts |
-| `GOOGLE_CLIENT_ID` | Google OAuth client ID (production auth) |
-| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Same client ID, exposed to browser for Google Sign-In |
-| `SEED_ADMIN_ID` | Google sub ID that gets auto-promoted to organiser on first login |
+| Variable                       | Description                                                       |
+| ------------------------------ | ----------------------------------------------------------------- |
+| `DATABASE_URL`                 | Postgres/AlloyDB connection string                                |
+| `GCS_BUCKET`                   | Google Cloud Storage bucket for assets                            |
+| `AUTH_MODE`                    | Set to `test` for local dev with test accounts                    |
+| `GOOGLE_CLIENT_ID`             | Google OAuth client ID (production auth)                          |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Same client ID, exposed to browser for Google Sign-In             |
+| `SEED_ADMIN_ID`                | Google sub ID that gets auto-promoted to organiser on first login |
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `make build` | Production build |
-| `make test` | Lint check (eslint + prettier) |
-| `make run` | Start dev server (`AUTH_MODE=test`) |
-| `make docker-build` | Build Docker image |
+| Command             | Description                         |
+| ------------------- | ----------------------------------- |
+| `make build`        | Production build                    |
+| `make test`         | Lint check (eslint + prettier)      |
+| `make run`          | Start dev server (`AUTH_MODE=test`) |
+| `make docker-build` | Build Docker image                  |
 
 ## Deployment
 
