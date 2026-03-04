@@ -3,6 +3,10 @@
 import { useEffect, useState } from 'react';
 import { useUser } from '@/context/UserContext';
 import { listRoleAssignments, setUserRoles } from '@/actions/roles';
+import btn from '@/styles/Button.module.css';
+import table from '@/styles/Table.module.css';
+import form from '@/styles/Form.module.css';
+import styles from './RoleBrowser.module.css';
 
 interface Assignment {
   userId: string;
@@ -51,16 +55,16 @@ export function RoleBrowser() {
   return (
     <div>
       <h1>Role Management</h1>
-      <div style={formStyle}>
+      <div className={form.formRow}>
         <input
           value={userId}
           onChange={(e) => setUserId(e.target.value)}
           placeholder="User ID"
-          style={inputStyle}
+          className={form.input}
         />
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div className={styles.roleCheckboxes}>
           {availableRoles.map((role) => (
-            <label key={role} style={{ fontSize: '0.875rem' }}>
+            <label key={role} className={form.checkboxLabel}>
               <input
                 type="checkbox"
                 checked={selectedRoles.includes(role)}
@@ -70,84 +74,41 @@ export function RoleBrowser() {
             </label>
           ))}
         </div>
-        <button onClick={handleSubmit} style={addBtnStyle}>
+        <button onClick={handleSubmit} className={btn.primary}>
           Set Roles
         </button>
       </div>
       {assignments.length === 0 ? (
-        <p style={{ color: 'var(--color-text-muted)' }}>No role assignments.</p>
+        <p className={styles.empty}>No role assignments.</p>
       ) : (
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th style={thStyle}>User ID</th>
-              <th style={thStyle}>Roles</th>
-              <th style={thStyle}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {assignments.map((a) => (
-              <tr key={a.userId}>
-                <td style={tdStyle}>{a.userId}</td>
-                <td style={tdStyle}>{a.roles.join(', ')}</td>
-                <td style={tdStyle}>
-                  <button
-                    onClick={() => handleRemove(a.userId)}
-                    style={deleteBtnStyle}
-                  >
-                    Remove
-                  </button>
-                </td>
+        <div className={table.tableWrapper}>
+          <table className={table.table}>
+            <thead>
+              <tr>
+                <th className={table.th}>User ID</th>
+                <th className={table.th}>Roles</th>
+                <th className={table.th}>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {assignments.map((a) => (
+                <tr key={a.userId} className={table.tr}>
+                  <td className={table.td}>{a.userId}</td>
+                  <td className={table.td}>{a.roles.join(', ')}</td>
+                  <td className={table.td}>
+                    <button
+                      onClick={() => handleRemove(a.userId)}
+                      className={btn.danger}
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
 }
-
-const formStyle: React.CSSProperties = {
-  display: 'flex',
-  gap: 8,
-  marginBottom: 'var(--space-lg)',
-  flexWrap: 'wrap',
-  alignItems: 'center',
-};
-const inputStyle: React.CSSProperties = {
-  padding: '6px 10px',
-  border: '1px solid var(--color-border)',
-  borderRadius: 4,
-  fontSize: '0.875rem',
-};
-const addBtnStyle: React.CSSProperties = {
-  padding: '6px 16px',
-  background: 'var(--color-primary)',
-  color: '#fff',
-  border: 'none',
-  borderRadius: 4,
-  cursor: 'pointer',
-};
-const tableStyle: React.CSSProperties = {
-  width: '100%',
-  borderCollapse: 'collapse',
-};
-const thStyle: React.CSSProperties = {
-  textAlign: 'left',
-  padding: '8px 12px',
-  borderBottom: '2px solid var(--color-border)',
-  fontSize: '0.8125rem',
-  fontWeight: 600,
-};
-const tdStyle: React.CSSProperties = {
-  padding: '8px 12px',
-  borderBottom: '1px solid var(--color-border)',
-  fontSize: '0.875rem',
-};
-const deleteBtnStyle: React.CSSProperties = {
-  background: 'none',
-  border: 'none',
-  color: 'var(--color-danger)',
-  cursor: 'pointer',
-  fontSize: '0.8125rem',
-};

@@ -1,0 +1,7 @@
+.empty {
+  color: var(--color-text-muted);
+}
+
+.comment {
+  font-size: var(--text-base);
+}

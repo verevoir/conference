@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useUser } from '@/context/UserContext';
 import { AuthButton } from './AuthButton';
+import styles from './AdminSidebar.module.css';
 
 const navItems = [
   { href: '/admin', label: 'Dashboard' },
@@ -29,21 +30,16 @@ export function AdminSidebar() {
   if (!can('read')) return null;
 
   return (
-    <aside style={sidebarStyle}>
-      <div
-        style={{
-          padding: 'var(--space-md)',
-          borderBottom: '1px solid var(--color-border)',
-        }}
-      >
-        <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+    <aside className={styles.sidebar}>
+      <div className={styles.brand}>
+        <Link href="/" className={styles.brandLink}>
           <strong>Conference Admin</strong>
         </Link>
       </div>
-      <div style={{ padding: 'var(--space-sm)' }}>
+      <div className={styles.authSection}>
         <AuthButton />
       </div>
-      <nav style={{ flex: 1, padding: 'var(--space-sm)' }}>
+      <nav className={styles.nav}>
         {navItems.map((item) => {
           const active =
             item.href === '/admin'
@@ -53,45 +49,18 @@ export function AdminSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              style={{
-                ...linkStyle,
-                background: active ? 'var(--color-primary-light)' : undefined,
-                fontWeight: active ? 600 : 400,
-              }}
+              className={active ? styles.navLinkActive : styles.navLink}
             >
               {item.label}
             </Link>
           );
         })}
       </nav>
-      <div
-        style={{
-          padding: 'var(--space-sm)',
-          borderTop: '1px solid var(--color-border)',
-        }}
-      >
-        <Link href="/" style={linkStyle}>
+      <div className={styles.footer}>
+        <Link href="/" className={styles.navLink}>
           View public site
         </Link>
       </div>
     </aside>
   );
 }
-
-const sidebarStyle: React.CSSProperties = {
-  width: 220,
-  borderRight: '1px solid var(--color-border)',
-  display: 'flex',
-  flexDirection: 'column',
-  background: 'var(--color-surface)',
-  minHeight: '100vh',
-};
-
-const linkStyle: React.CSSProperties = {
-  display: 'block',
-  padding: '6px 12px',
-  borderRadius: 4,
-  textDecoration: 'none',
-  color: 'inherit',
-  fontSize: '0.875rem',
-};

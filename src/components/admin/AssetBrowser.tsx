@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import { useUser } from '@/context/UserContext';
 import { listAssets, uploadAsset, deleteAsset } from '@/actions/assets';
 import type { SerializedDocument } from '@/lib/serialization';
+import btn from '@/styles/Button.module.css';
+import table from '@/styles/Table.module.css';
+import styles from './AssetBrowser.module.css';
 
 export function AssetBrowser() {
   const [assets, setAssets] = useState<SerializedDocument[]>([]);
@@ -38,71 +41,49 @@ export function AssetBrowser() {
     <div>
       <h1>Assets</h1>
       {can('create') && (
-        <div style={{ marginBottom: 'var(--space-lg)' }}>
+        <div className={styles.uploadRow}>
           <input type="file" onChange={handleUpload} accept="image/*,video/*" />
         </div>
       )}
       {assets.length === 0 ? (
-        <p style={{ color: 'var(--color-text-muted)' }}>No assets uploaded.</p>
+        <p className={styles.empty}>No assets uploaded.</p>
       ) : (
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th style={thStyle}>Filename</th>
-              <th style={thStyle}>Type</th>
-              <th style={thStyle}>Dimensions</th>
-              <th style={thStyle}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {assets.map((a) => (
-              <tr key={a.id}>
-                <td style={tdStyle}>{String(a.data.filename)}</td>
-                <td style={tdStyle}>{String(a.data.type)}</td>
-                <td style={tdStyle}>
-                  {a.data.width && a.data.height
-                    ? `${a.data.width}x${a.data.height}`
-                    : '-'}
-                </td>
-                <td style={tdStyle}>
-                  {can('delete') && (
-                    <button
-                      onClick={() => handleDelete(a.id)}
-                      style={deleteBtnStyle}
-                    >
-                      Delete
-                    </button>
-                  )}
-                </td>
+        <div className={table.tableWrapper}>
+          <table className={table.table}>
+            <thead>
+              <tr>
+                <th className={table.th}>Filename</th>
+                <th className={table.th}>Type</th>
+                <th className={table.th}>Dimensions</th>
+                <th className={table.th}>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {assets.map((a) => (
+                <tr key={a.id} className={table.tr}>
+                  <td className={table.td}>{String(a.data.filename)}</td>
+                  <td className={table.td}>{String(a.data.type)}</td>
+                  <td className={table.td}>
+                    {a.data.width && a.data.height
+                      ? `${a.data.width}x${a.data.height}`
+                      : '-'}
+                  </td>
+                  <td className={table.td}>
+                    {can('delete') && (
+                      <button
+                        onClick={() => handleDelete(a.id)}
+                        className={btn.danger}
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
 }
-
-const tableStyle: React.CSSProperties = {
-  width: '100%',
-  borderCollapse: 'collapse',
-};
-const thStyle: React.CSSProperties = {
-  textAlign: 'left',
-  padding: '8px 12px',
-  borderBottom: '2px solid var(--color-border)',
-  fontSize: '0.8125rem',
-  fontWeight: 600,
-};
-const tdStyle: React.CSSProperties = {
-  padding: '8px 12px',
-  borderBottom: '1px solid var(--color-border)',
-  fontSize: '0.875rem',
-};
-const deleteBtnStyle: React.CSSProperties = {
-  background: 'none',
-  border: 'none',
-  color: 'var(--color-danger)',
-  cursor: 'pointer',
-  fontSize: '0.8125rem',
-};

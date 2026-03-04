@@ -1,0 +1,7 @@
+.uploadRow {
+  margin-bottom: var(--space-lg);
+}
+
+.empty {
+  color: var(--color-text-muted);
+}

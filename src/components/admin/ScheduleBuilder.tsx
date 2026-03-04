@@ -8,6 +8,10 @@ import {
   deleteDocument,
 } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
+import btn from '@/styles/Button.module.css';
+import table from '@/styles/Table.module.css';
+import form from '@/styles/Form.module.css';
+import styles from './ScheduleBuilder.module.css';
 
 export function ScheduleBuilder() {
   const [slots, setSlots] = useState<SerializedDocument[]>([]);
@@ -50,11 +54,11 @@ export function ScheduleBuilder() {
     <div>
       <h1>Schedule Builder</h1>
       {can('create') && (
-        <div style={formStyle}>
+        <div className={form.formRow}>
           <select
             value={talkId}
             onChange={(e) => setTalkId(e.target.value)}
-            style={inputStyle}
+            className={form.select}
           >
             <option value="">Select talk...</option>
             {talks.map((t) => (
@@ -68,113 +72,66 @@ export function ScheduleBuilder() {
             value={startTime}
             onChange={(e) => setStartTime(e.target.value)}
             placeholder="Start"
-            style={inputStyle}
+            className={form.input}
           />
           <input
             type="datetime-local"
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}
             placeholder="End"
-            style={inputStyle}
+            className={form.input}
           />
           <input
             value={room}
             onChange={(e) => setRoom(e.target.value)}
             placeholder="Room"
-            style={inputStyle}
+            className={form.input}
           />
-          <button onClick={handleAdd} style={addBtnStyle}>
+          <button onClick={handleAdd} className={btn.primary}>
             Add Slot
           </button>
         </div>
       )}
       {slots.length === 0 ? (
-        <p style={{ color: 'var(--color-text-muted)' }}>
-          No schedule slots yet.
-        </p>
+        <p className={styles.empty}>No schedule slots yet.</p>
       ) : (
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th style={thStyle}>Talk</th>
-              <th style={thStyle}>Start</th>
-              <th style={thStyle}>End</th>
-              <th style={thStyle}>Room</th>
-              <th style={thStyle}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {slots.map((slot) => (
-              <tr key={slot.id}>
-                <td style={tdStyle}>
-                  {talkMap.get(slot.data.talkId as string) ??
-                    (slot.data.talkId as string)}
-                </td>
-                <td style={tdStyle}>{String(slot.data.startTime)}</td>
-                <td style={tdStyle}>{String(slot.data.endTime)}</td>
-                <td style={tdStyle}>{String(slot.data.room)}</td>
-                <td style={tdStyle}>
-                  {can('delete') && (
-                    <button
-                      onClick={() => handleRemove(slot.id)}
-                      style={deleteBtnStyle}
-                    >
-                      Remove
-                    </button>
-                  )}
-                </td>
+        <div className={table.tableWrapper}>
+          <table className={table.table}>
+            <thead>
+              <tr>
+                <th className={table.th}>Talk</th>
+                <th className={table.th}>Start</th>
+                <th className={table.th}>End</th>
+                <th className={table.th}>Room</th>
+                <th className={table.th}>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {slots.map((slot) => (
+                <tr key={slot.id} className={table.tr}>
+                  <td className={table.td}>
+                    {talkMap.get(slot.data.talkId as string) ??
+                      (slot.data.talkId as string)}
+                  </td>
+                  <td className={table.td}>{String(slot.data.startTime)}</td>
+                  <td className={table.td}>{String(slot.data.endTime)}</td>
+                  <td className={table.td}>{String(slot.data.room)}</td>
+                  <td className={table.td}>
+                    {can('delete') && (
+                      <button
+                        onClick={() => handleRemove(slot.id)}
+                        className={btn.danger}
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
 }
-
-const formStyle: React.CSSProperties = {
-  display: 'flex',
-  gap: 8,
-  marginBottom: 'var(--space-lg)',
-  flexWrap: 'wrap',
-};
-
-const inputStyle: React.CSSProperties = {
-  padding: '6px 10px',
-  border: '1px solid var(--color-border)',
-  borderRadius: 4,
-  fontSize: '0.875rem',
-};
-
-const addBtnStyle: React.CSSProperties = {
-  padding: '6px 16px',
-  background: 'var(--color-primary)',
-  color: '#fff',
-  border: 'none',
-  borderRadius: 4,
-  cursor: 'pointer',
-};
-
-const tableStyle: React.CSSProperties = {
-  width: '100%',
-  borderCollapse: 'collapse',
-};
-const thStyle: React.CSSProperties = {
-  textAlign: 'left',
-  padding: '8px 12px',
-  borderBottom: '2px solid var(--color-border)',
-  fontSize: '0.8125rem',
-  fontWeight: 600,
-};
-const tdStyle: React.CSSProperties = {
-  padding: '8px 12px',
-  borderBottom: '1px solid var(--color-border)',
-  fontSize: '0.875rem',
-};
-const deleteBtnStyle: React.CSSProperties = {
-  background: 'none',
-  border: 'none',
-  color: 'var(--color-danger)',
-  cursor: 'pointer',
-  fontSize: '0.8125rem',
-};

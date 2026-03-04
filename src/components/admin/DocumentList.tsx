@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { useUser } from '@/context/UserContext';
 import { listDocuments, deleteDocument } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
+import btn from '@/styles/Button.module.css';
+import table from '@/styles/Table.module.css';
+import styles from './DocumentList.module.css';
 
 interface DocumentListProps {
   blockType: string;
@@ -41,102 +44,57 @@ export function DocumentList({
 
   return (
     <div>
-      <div style={headerStyle}>
+      <div className={styles.header}>
         <h1>{label}s</h1>
         {can('create') && (
-          <Link href={newPath} style={newBtnStyle}>
+          <Link href={newPath} className={btn.primary}>
             New {label}
           </Link>
         )}
       </div>
       {docs.length === 0 ? (
-        <p style={{ color: 'var(--color-text-muted)' }}>No {blockType}s yet.</p>
+        <p className={styles.empty}>No {blockType}s yet.</p>
       ) : (
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th style={thStyle}>{labelField}</th>
-              <th style={thStyle}>Updated</th>
-              <th style={thStyle}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {docs.map((doc) => (
-              <tr key={doc.id}>
-                <td style={tdStyle}>
-                  {String(doc.data[labelField] ?? doc.id)}
-                </td>
-                <td style={tdStyle}>
-                  {new Date(doc.updatedAt).toLocaleDateString()}
-                </td>
-                <td style={tdStyle}>
-                  <Link href={editPath(doc.id)} style={actionLink}>
-                    Edit
-                  </Link>
-                  {can('delete') && (
-                    <button
-                      onClick={() => handleDelete(doc.id)}
-                      style={deleteBtnStyle}
-                    >
-                      Delete
-                    </button>
-                  )}
-                </td>
+        <div className={table.tableWrapper}>
+          <table className={table.table}>
+            <thead>
+              <tr>
+                <th className={table.th}>{labelField}</th>
+                <th className={table.th}>Updated</th>
+                <th className={table.th}>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {docs.map((doc) => (
+                <tr key={doc.id} className={table.tr}>
+                  <td className={table.td}>
+                    {String(doc.data[labelField] ?? doc.id)}
+                  </td>
+                  <td className={table.td}>
+                    {new Date(doc.updatedAt).toLocaleDateString()}
+                  </td>
+                  <td className={table.td}>
+                    <Link
+                      href={editPath(doc.id)}
+                      className={styles.actionLink}
+                    >
+                      Edit
+                    </Link>
+                    {can('delete') && (
+                      <button
+                        onClick={() => handleDelete(doc.id)}
+                        className={btn.danger}
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
 }
-
-const headerStyle: React.CSSProperties = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginBottom: 'var(--space-lg)',
-};
-
-const newBtnStyle: React.CSSProperties = {
-  padding: '8px 16px',
-  background: 'var(--color-primary)',
-  color: '#fff',
-  textDecoration: 'none',
-  borderRadius: 4,
-  fontSize: '0.875rem',
-};
-
-const tableStyle: React.CSSProperties = {
-  width: '100%',
-  borderCollapse: 'collapse',
-};
-
-const thStyle: React.CSSProperties = {
-  textAlign: 'left',
-  padding: '8px 12px',
-  borderBottom: '2px solid var(--color-border)',
-  fontSize: '0.8125rem',
-  fontWeight: 600,
-};
-
-const tdStyle: React.CSSProperties = {
-  padding: '8px 12px',
-  borderBottom: '1px solid var(--color-border)',
-  fontSize: '0.875rem',
-};
-
-const actionLink: React.CSSProperties = {
-  marginRight: 8,
-  color: 'var(--color-primary)',
-  textDecoration: 'none',
-  fontSize: '0.8125rem',
-};
-
-const deleteBtnStyle: React.CSSProperties = {
-  background: 'none',
-  border: 'none',
-  color: 'var(--color-danger)',
-  cursor: 'pointer',
-  fontSize: '0.8125rem',
-};

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@/context/UserContext';
 import { getTestAccounts, getAuthMode } from '@/actions/auth';
+import btn from '@/styles/Button.module.css';
+import styles from './AuthButton.module.css';
 
 interface TestAccountInfo {
   token: string;
@@ -68,23 +70,23 @@ export function AuthButton() {
   if (authMode === 'test') {
     if (isAuthenticated) {
       return (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: '0.875rem' }}>
+        <div className={styles.row}>
+          <span className={styles.userName}>
             {(identity.metadata?.name as string) || identity.id}
           </span>
-          <button onClick={signOut} style={btnStyle}>
+          <button onClick={signOut} className={btn.subtle}>
             Sign out
           </button>
         </div>
       );
     }
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <div className={styles.column}>
         {accounts.map((a) => (
           <button
             key={a.token}
             onClick={() => signIn(a.token)}
-            style={btnStyle}
+            className={btn.subtle}
           >
             {a.name} ({a.roles.join(', ')})
           </button>
@@ -96,8 +98,8 @@ export function AuthButton() {
   // Google auth mode
   if (isAuthenticated) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span style={{ fontSize: '0.875rem' }}>
+      <div className={styles.row}>
+        <span className={styles.userName}>
           {(identity.metadata?.name as string) || identity.id}
         </span>
         <button
@@ -105,7 +107,7 @@ export function AuthButton() {
             window.google?.accounts.id.disableAutoSelect();
             signOut();
           }}
-          style={btnStyle}
+          className={btn.subtle}
         >
           Sign out
         </button>
@@ -117,12 +119,3 @@ export function AuthButton() {
 
   return <div ref={googleButtonRef} />;
 }
-
-const btnStyle: React.CSSProperties = {
-  padding: '6px 12px',
-  fontSize: '0.8125rem',
-  border: '1px solid var(--color-border)',
-  borderRadius: 4,
-  background: 'var(--color-surface)',
-  cursor: 'pointer',
-};

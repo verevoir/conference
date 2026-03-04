@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
+.empty {
+  color: var(--color-text-muted);
+}
+
+.actionLink {
+  margin-right: var(--space-sm);
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  transition: color var(--transition-fast);
+}
+
+.actionLink:hover {
+  color: var(--color-primary-dark);
+}

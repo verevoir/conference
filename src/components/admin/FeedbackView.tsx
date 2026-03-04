@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { listDocuments } from '@/actions/documents';
 import { getFeedbackForTalk } from '@/actions/feedback';
+import card from '@/styles/Card.module.css';
+import styles from './FeedbackView.module.css';
 
 interface TalkFeedback {
   talkId: string;
@@ -52,10 +54,10 @@ export function FeedbackView() {
     <div>
       <h1>Talk Feedback</h1>
       {feedbackByTalk.length === 0 ? (
-        <p style={{ color: 'var(--color-text-muted)' }}>No feedback yet.</p>
+        <p className={styles.empty}>No feedback yet.</p>
       ) : (
         feedbackByTalk.map((tf) => (
-          <div key={tf.talkId} style={cardStyle}>
+          <div key={tf.talkId} className={card.card}>
             <h3>{tf.talkTitle}</h3>
             <p>
               Average: <strong>{tf.avgRating}/5</strong> ({tf.count}{' '}
@@ -66,7 +68,7 @@ export function FeedbackView() {
                 <strong>Comments:</strong>
                 <ul>
                   {tf.comments.map((c, i) => (
-                    <li key={i} style={{ fontSize: '0.875rem' }}>
+                    <li key={i} className={styles.comment}>
                       {c}
                     </li>
                   ))}
@@ -79,10 +81,3 @@ export function FeedbackView() {
     </div>
   );
 }
-
-const cardStyle: React.CSSProperties = {
-  padding: 'var(--space-md)',
-  border: '1px solid var(--color-border)',
-  borderRadius: 8,
-  marginBottom: 'var(--space-md)',
-};

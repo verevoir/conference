@@ -17,6 +17,9 @@ import {
   listDocuments,
 } from '@/actions/documents';
 import { TalkStatusField, BlogStatusField } from './StatusField';
+import btn from '@/styles/Button.module.css';
+import form from '@/styles/Form.module.css';
+import styles from './DocumentEditor.module.css';
 
 interface DocumentEditorProps {
   blockType: string;
@@ -116,12 +119,12 @@ export function DocumentEditor({
   return (
     <div>
       <h1>{documentId ? `Edit ${label}` : `New ${label}`}</h1>
-      <div style={toolbarStyle}>
-        <button style={backBtnStyle} onClick={() => router.push(backPath)}>
+      <div className={styles.toolbar}>
+        <button className={btn.secondary} onClick={() => router.push(backPath)}>
           Back
         </button>
         <button
-          style={canSave ? saveBtnStyle : disabledBtnStyle}
+          className={canSave ? btn.primary : btn.disabled}
           onClick={handleSave}
           disabled={!canSave}
         >
@@ -129,7 +132,7 @@ export function DocumentEditor({
         </button>
       </div>
       {!state.valid && (
-        <div style={errorStyle}>
+        <div className={form.error}>
           {Object.entries(state.errors).map(([field, msg]) => (
             <div key={field}>
               <strong>{field}</strong>: {String(msg)}
@@ -148,42 +151,3 @@ export function DocumentEditor({
     </div>
   );
 }
-
-const toolbarStyle: React.CSSProperties = {
-  display: 'flex',
-  gap: 'var(--space-sm)',
-  marginBottom: 'var(--space-lg)',
-};
-
-const saveBtnStyle: React.CSSProperties = {
-  background: 'var(--color-primary)',
-  color: '#fff',
-  padding: '8px 16px',
-  border: 'none',
-  borderRadius: 4,
-  cursor: 'pointer',
-};
-
-const disabledBtnStyle: React.CSSProperties = {
-  background: 'var(--color-border)',
-  color: 'var(--color-text-muted)',
-  padding: '8px 16px',
-  border: 'none',
-  borderRadius: 4,
-  cursor: 'not-allowed',
-};
-
-const backBtnStyle: React.CSSProperties = {
-  background: 'var(--color-border)',
-  color: 'var(--color-text)',
-  padding: '8px 16px',
-  border: 'none',
-  borderRadius: 4,
-  cursor: 'pointer',
-};
-
-const errorStyle: React.CSSProperties = {
-  color: 'var(--color-danger)',
-  fontSize: '0.875rem',
-  marginBottom: 'var(--space-md)',
-};

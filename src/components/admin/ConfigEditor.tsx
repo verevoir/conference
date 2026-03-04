@@ -9,6 +9,9 @@ import {
   createDocument,
   updateDocument,
 } from '@/actions/documents';
+import btn from '@/styles/Button.module.css';
+import form from '@/styles/Form.module.css';
+import styles from './ConfigEditor.module.css';
 
 export function ConfigEditor() {
   const [docId, setDocId] = useState<string | null>(null);
@@ -42,17 +45,17 @@ export function ConfigEditor() {
   return (
     <div>
       <h1>Conference Config</h1>
-      <div style={{ marginBottom: 'var(--space-lg)' }}>
+      <div className={styles.toolbar}>
         <button
           onClick={handleSave}
           disabled={!can('update')}
-          style={can('update') ? saveBtnStyle : disabledStyle}
+          className={can('update') ? btn.primary : btn.disabled}
         >
           Save
         </button>
       </div>
       {!state.valid && (
-        <div style={errorStyle}>
+        <div className={form.error}>
           {Object.entries(state.errors).map(([field, msg]) => (
             <div key={field}>
               <strong>{field}</strong>: {String(msg)}
@@ -68,27 +71,3 @@ export function ConfigEditor() {
     </div>
   );
 }
-
-const saveBtnStyle: React.CSSProperties = {
-  padding: '8px 16px',
-  background: 'var(--color-primary)',
-  color: '#fff',
-  border: 'none',
-  borderRadius: 4,
-  cursor: 'pointer',
-};
-
-const disabledStyle: React.CSSProperties = {
-  padding: '8px 16px',
-  background: 'var(--color-border)',
-  color: 'var(--color-text-muted)',
-  border: 'none',
-  borderRadius: 4,
-  cursor: 'not-allowed',
-};
-
-const errorStyle: React.CSSProperties = {
-  color: 'var(--color-danger)',
-  fontSize: '0.875rem',
-  marginBottom: 'var(--space-md)',
-};

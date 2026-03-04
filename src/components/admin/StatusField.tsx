@@ -2,6 +2,8 @@
 
 import type { FieldEditorProps } from '@verevoir/editor';
 import { useUser } from '@/context/UserContext';
+import btn from '@/styles/Button.module.css';
+import styles from './StatusField.module.css';
 
 interface StatusFieldProps extends FieldEditorProps {
   workflow: 'talk' | 'blog';
@@ -22,13 +24,13 @@ function StatusFieldInner({ value, onChange, workflow }: StatusFieldProps) {
   const transitions = wf.availableTransitions(current, identity);
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-      <span style={badgeStyle}>{current}</span>
+    <div className={styles.row}>
+      <span className={styles.badge}>{current}</span>
       {transitions.map((t) => (
         <button
           key={t.to}
           onClick={() => onChange(t.to)}
-          style={transitionBtnStyle}
+          className={`${btn.subtle} ${btn.sm}`}
         >
           &rarr; {t.to}
         </button>
@@ -36,20 +38,3 @@ function StatusFieldInner({ value, onChange, workflow }: StatusFieldProps) {
     </div>
   );
 }
-
-const badgeStyle: React.CSSProperties = {
-  padding: '2px 8px',
-  borderRadius: 4,
-  background: 'var(--color-primary-light)',
-  fontSize: '0.8125rem',
-  fontWeight: 600,
-};
-
-const transitionBtnStyle: React.CSSProperties = {
-  padding: '4px 8px',
-  fontSize: '0.75rem',
-  border: '1px solid var(--color-border)',
-  borderRadius: 4,
-  background: 'var(--color-surface)',
-  cursor: 'pointer',
-};

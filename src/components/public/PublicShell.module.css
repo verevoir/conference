@@ -1,0 +1,12 @@
+.main {
+  max-width: var(--width-public);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+  min-height: calc(100vh - 200px);
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: var(--space-md);
+  }
+}
