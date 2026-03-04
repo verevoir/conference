@@ -1,5 +1,7 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
+ARG NEXT_PUBLIC_GOOGLE_CLIENT_ID
+ENV NEXT_PUBLIC_GOOGLE_CLIENT_ID=$NEXT_PUBLIC_GOOGLE_CLIENT_ID
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
