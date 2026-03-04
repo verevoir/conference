@@ -1,4 +1,4 @@
-import { definePolicy } from '@nextlake/access';
+import { definePolicy } from '@verevoir/access';
 
 export const conferencePolicy = definePolicy({
   rules: [

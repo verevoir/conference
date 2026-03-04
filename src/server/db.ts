@@ -1,4 +1,4 @@
-import { PostgresAdapter } from '@nextlake/storage';
+import { PostgresAdapter } from '@verevoir/storage';
 
 const storage = new PostgresAdapter({
   connectionString: process.env.DATABASE_URL!,

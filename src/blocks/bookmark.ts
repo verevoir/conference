@@ -1,4 +1,4 @@
-import { defineBlock, text } from '@nextlake/schema';
+import { defineBlock, text } from '@verevoir/schema';
 
 export const bookmark = defineBlock({
   name: 'bookmark',

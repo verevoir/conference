@@ -5,7 +5,7 @@ import {
   number,
   select,
   reference,
-} from '@nextlake/schema';
+} from '@verevoir/schema';
 
 export const talk = defineBlock({
   name: 'talk',

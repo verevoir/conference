@@ -7,7 +7,7 @@ import {
   type SerializedDocument,
 } from '@/lib/serialization';
 import { ensureDb } from '@/server/db';
-import type { ListOptions } from '@nextlake/storage';
+import type { ListOptions } from '@verevoir/storage';
 
 export async function listAssets(
   options?: ListOptions,

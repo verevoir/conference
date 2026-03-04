@@ -6,12 +6,12 @@ A delegate-first conference website powered by [NextLake](https://github.com/ads
 
 This is a production-grade application showcasing all six NextLake packages working together:
 
-- **@nextlake/schema** — 12 content models (talks, speakers, tracks, sponsors, schedule slots, blog posts, pages, organisers, highlights, feedback, bookmarks, config)
-- **@nextlake/storage** — PostgresAdapter for AlloyDB persistence
-- **@nextlake/editor** — Admin content editing UI with custom field overrides (StatusField, HeroImageField)
-- **@nextlake/access** — Google OAuth, role-based policies (organiser/delegate/viewer), publishing workflows
-- **@nextlake/assets** — GcsBlobStore for binary storage, AssetManager for upload/metadata
-- **@nextlake/media** — imgproxy URL generation, image blocks, hotspot editing
+- **@verevoir/schema** — 12 content models (talks, speakers, tracks, sponsors, schedule slots, blog posts, pages, organisers, highlights, feedback, bookmarks, config)
+- **@verevoir/storage** — PostgresAdapter for AlloyDB persistence
+- **@verevoir/editor** — Admin content editing UI with custom field overrides (StatusField, HeroImageField)
+- **@verevoir/access** — Google OAuth, role-based policies (organiser/delegate/viewer), publishing workflows
+- **@verevoir/assets** — GcsBlobStore for binary storage, AssetManager for upload/metadata
+- **@verevoir/media** — imgproxy URL generation, image blocks, hotspot editing
 
 ## Architecture
 

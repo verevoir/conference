@@ -4,7 +4,7 @@ import {
   richText,
   select,
   reference,
-} from '@nextlake/schema';
+} from '@verevoir/schema';
 
 export const post = defineBlock({
   name: 'post',

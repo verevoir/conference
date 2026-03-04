@@ -1,4 +1,4 @@
-import { createRoleStore } from '@nextlake/access/role-store';
+import { createRoleStore } from '@verevoir/access/role-store';
 import { ensureDb } from './db';
 
 type RoleStore = Awaited<ReturnType<typeof createRoleStore>>;

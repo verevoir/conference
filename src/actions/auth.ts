@@ -1,7 +1,7 @@
 'use server';
 
 import { auth, testAccounts } from '@/server/auth';
-import type { Identity } from '@nextlake/access';
+import type { Identity } from '@verevoir/access';
 
 export async function resolveToken(
   token: string | null,

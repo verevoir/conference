@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { BlockEditor, useBlockForm } from '@nextlake/editor';
+import { BlockEditor, useBlockForm } from '@verevoir/editor';
 import { config as configBlock } from '@/blocks/config';
 import { useUser } from '@/context/UserContext';
 import {

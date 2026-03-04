@@ -1,6 +1,6 @@
-import { createTestAuthAdapter } from '@nextlake/access/test-accounts';
-import type { TestAccount } from '@nextlake/access/test-accounts';
-import type { Identity } from '@nextlake/access';
+import { createTestAuthAdapter } from '@verevoir/access/test-accounts';
+import type { TestAccount } from '@verevoir/access/test-accounts';
+import type { Identity } from '@verevoir/access';
 
 const testAccounts: TestAccount[] = [
   {
@@ -40,7 +40,7 @@ function createAuth() {
     async resolve(token: string | null): Promise<Identity | null> {
       if (!token) return null;
       const { createGoogleAuthAdapter } =
-        await import('@nextlake/access/google');
+        await import('@verevoir/access/google');
       const { getRoleStore } = await import('./roles');
       const roleStore = await getRoleStore();
       const { OAuth2Client } = await import('google-auth-library');

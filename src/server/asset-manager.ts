@@ -1,4 +1,4 @@
-import { AssetManager } from '@nextlake/assets';
+import { AssetManager } from '@verevoir/assets';
 import { ensureDb } from './db';
 import { blobStore } from './blob-store';
 

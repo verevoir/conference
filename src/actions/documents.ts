@@ -6,7 +6,7 @@ import {
   serializeDocuments,
   type SerializedDocument,
 } from '@/lib/serialization';
-import type { ListOptions } from '@nextlake/storage';
+import type { ListOptions } from '@verevoir/storage';
 
 export async function listDocuments(
   blockType: string,

@@ -1,4 +1,4 @@
-import { defineBlock, text, number } from '@nextlake/schema';
+import { defineBlock, text, number } from '@verevoir/schema';
 
 export const feedback = defineBlock({
   name: 'feedback',

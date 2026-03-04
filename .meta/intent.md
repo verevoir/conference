@@ -32,7 +32,7 @@ Provide a production-grade conference website that showcases all six NextLake pa
 ## Constraints
 
 - Must build and deploy as a standalone Next.js application
-- All database operations go through `@nextlake/storage` StorageAdapter interface
-- All binary operations go through `@nextlake/assets` BlobStore interface
+- All database operations go through `@verevoir/storage` StorageAdapter interface
+- All binary operations go through `@verevoir/assets` BlobStore interface
 - Must work with `AUTH_MODE=test` for local development with no external dependencies beyond Postgres
-- Content models defined using `@nextlake/schema` — no ad-hoc data shapes
+- Content models defined using `@verevoir/schema` — no ad-hoc data shapes

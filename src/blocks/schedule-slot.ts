@@ -1,4 +1,4 @@
-import { defineBlock, text, reference } from '@nextlake/schema';
+import { defineBlock, text, reference } from '@verevoir/schema';
 
 export const scheduleSlot = defineBlock({
   name: 'schedule-slot',

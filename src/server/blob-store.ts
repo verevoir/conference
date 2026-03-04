@@ -1,5 +1,5 @@
 import { Storage } from '@google-cloud/storage';
-import { GcsBlobStore } from '@nextlake/assets/gcs';
+import { GcsBlobStore } from '@verevoir/assets/gcs';
 
 const client = new Storage();
 
