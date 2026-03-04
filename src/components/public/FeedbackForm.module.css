@@ -1,0 +1,47 @@
+.form {
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-top: var(--space-lg);
+}
+
+.stars {
+  display: flex;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+
+.star {
+  background: none;
+  border: none;
+  font-size: var(--text-xl);
+  cursor: pointer;
+  padding: 0;
+  color: var(--color-border);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.star:hover {
+  transform: scale(1.2);
+}
+
+.starActive {
+  composes: star;
+  color: var(--color-primary);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.saved {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.signInHint {
+  color: var(--color-text-muted);
+  font-size: var(--text-base);
+}

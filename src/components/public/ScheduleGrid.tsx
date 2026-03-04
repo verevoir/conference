@@ -2,6 +2,7 @@
 
 import type { SerializedDocument } from '@/lib/serialization';
 import { TalkCard } from './TalkCard';
+import styles from './ScheduleGrid.module.css';
 
 interface ScheduleGridProps {
   slots: SerializedDocument[];
@@ -36,17 +37,15 @@ export function ScheduleGrid({
   const dates = [...byDate.keys()].sort();
 
   if (dates.length === 0) {
-    return (
-      <p style={{ color: 'var(--color-text-muted)' }}>Schedule coming soon.</p>
-    );
+    return <p className={styles.empty}>Schedule coming soon.</p>;
   }
 
   return (
     <div>
       {dates.map((date) => (
-        <div key={date} style={{ marginBottom: 'var(--space-xl)' }}>
+        <div key={date} className={styles.dateSection}>
           <h2>{date}</h2>
-          <div style={gridStyle}>
+          <div className={styles.slotList}>
             {byDate.get(date)!.map((slot) => {
               const talk = talks.get(slot.data.talkId as string);
               if (!talk) return null;
@@ -54,7 +53,7 @@ export function ScheduleGrid({
               const track = tracks.get(talk.data.trackId as string);
               return (
                 <div key={slot.id}>
-                  <div style={timeStyle}>
+                  <div className={styles.timeLabel}>
                     {formatTime(String(slot.data.startTime))} &ndash;{' '}
                     {formatTime(String(slot.data.endTime))} |{' '}
                     {String(slot.data.room)}
@@ -85,15 +84,3 @@ function formatTime(iso: string): string {
     return iso;
   }
 }
-
-const gridStyle: React.CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 'var(--space-md)',
-};
-
-const timeStyle: React.CSSProperties = {
-  fontSize: '0.8125rem',
-  color: 'var(--color-text-muted)',
-  marginBottom: 'var(--space-xs)',
-};

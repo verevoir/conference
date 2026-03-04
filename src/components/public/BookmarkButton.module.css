@@ -1,0 +1,19 @@
+.button {
+  background: none;
+  border: none;
+  font-size: var(--text-lg);
+  cursor: pointer;
+  padding: var(--space-xs);
+  color: var(--color-primary);
+  transition: transform var(--transition-fast);
+}
+
+.button:hover {
+  transform: scale(1.2);
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}

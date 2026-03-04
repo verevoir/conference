@@ -7,6 +7,7 @@ import {
   removeBookmark,
   getMyBookmarks,
 } from '@/actions/bookmarks';
+import styles from './BookmarkButton.module.css';
 
 export function BookmarkButton({ talkId }: { talkId: string }) {
   const { identity, isAuthenticated } = useUser();
@@ -34,19 +35,10 @@ export function BookmarkButton({ talkId }: { talkId: string }) {
   return (
     <button
       onClick={toggle}
-      style={btnStyle}
+      className={styles.button}
       title={bookmarked ? 'Remove bookmark' : 'Add to schedule'}
     >
       {bookmarked ? '\u2605' : '\u2606'}
     </button>
   );
 }
-
-const btnStyle: React.CSSProperties = {
-  background: 'none',
-  border: 'none',
-  fontSize: '1.25rem',
-  cursor: 'pointer',
-  padding: 4,
-  color: 'var(--color-primary)',
-};
