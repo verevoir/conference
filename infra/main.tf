@@ -29,6 +29,7 @@ resource "google_project_service" "apis" {
     "secretmanager.googleapis.com",
     "artifactregistry.googleapis.com",
     "certificatemanager.googleapis.com",
+    "cloudtrace.googleapis.com",
   ])
   service            = each.value
   disable_on_destroy = false

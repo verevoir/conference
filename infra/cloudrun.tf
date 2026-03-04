@@ -56,7 +56,7 @@ resource "google_cloud_run_v2_service" "app" {
 
       startup_probe {
         http_get {
-          path = "/"
+          path = "/api/health"
         }
         initial_delay_seconds = 5
         period_seconds        = 10

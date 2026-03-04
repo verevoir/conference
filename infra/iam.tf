@@ -15,6 +15,12 @@ resource "google_project_iam_member" "cloudrun_alloydb" {
   member  = "serviceAccount:${google_service_account.cloudrun.email}"
 }
 
+resource "google_project_iam_member" "cloudrun_trace" {
+  project = var.project_id
+  role    = "roles/cloudtrace.agent"
+  member  = "serviceAccount:${google_service_account.cloudrun.email}"
+}
+
 resource "google_secret_manager_secret_iam_member" "cloudrun_database_url" {
   secret_id = google_secret_manager_secret.database_url.secret_id
   role      = "roles/secretmanager.secretAccessor"
