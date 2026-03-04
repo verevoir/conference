@@ -14,7 +14,7 @@ const navLinks = [
 ];
 
 export function Header() {
-  const { isAuthenticated } = useUser();
+  const { isAuthenticated, can } = useUser();
 
   return (
     <header style={headerStyle}>
@@ -36,9 +36,11 @@ export function Header() {
         </nav>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <AuthButton />
-          <Link href="/admin" style={adminLink}>
-            Admin
-          </Link>
+          {can('create') && (
+            <Link href="/admin" style={adminLink}>
+              Admin
+            </Link>
+          )}
         </div>
       </div>
     </header>

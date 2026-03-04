@@ -54,7 +54,7 @@ function createAuth() {
         allowedClientIds: [process.env.GOOGLE_CLIENT_ID!],
         hostedDomain: process.env.GOOGLE_HOSTED_DOMAIN || undefined,
         mapRoles: async (payload) => {
-          const sub = payload.sub ?? '';
+          const sub = `google-${payload.sub ?? ''}`;
           const roles = await roleStore.getRoles(sub);
           return roles.length > 0 ? roles : ['delegate'];
         },

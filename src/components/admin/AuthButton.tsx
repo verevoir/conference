@@ -12,7 +12,7 @@ interface TestAccountInfo {
 }
 
 export function AuthButton() {
-  const { identity, isAuthenticated, signIn, signOut } = useUser();
+  const { identity, isAuthenticated, isLoading, signIn, signOut } = useUser();
   const [accounts, setAccounts] = useState<TestAccountInfo[]>([]);
   const [authMode, setAuthMode] = useState<string>('google');
   const googleButtonRef = useRef<HTMLDivElement>(null);
@@ -21,6 +21,12 @@ export function AuthButton() {
     getAuthMode().then(setAuthMode);
     getTestAccounts().then(setAccounts);
   }, []);
+
+  useEffect(() => {
+    if (authMode === 'google' && isAuthenticated) {
+      window.google?.accounts.id.cancel();
+    }
+  }, [authMode, isAuthenticated]);
 
   useEffect(() => {
     if (authMode !== 'google' || isAuthenticated) return;
@@ -106,6 +112,8 @@ export function AuthButton() {
       </div>
     );
   }
+
+  if (isLoading) return null;
 
   return <div ref={googleButtonRef} />;
 }

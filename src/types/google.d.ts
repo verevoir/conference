@@ -16,6 +16,7 @@ interface GoogleAccountsId {
   prompt(): void;
   revoke(hint: string, callback?: () => void): void;
   disableAutoSelect(): void;
+  cancel(): void;
 }
 
 interface Google {
