@@ -5,7 +5,7 @@ ENV NEXT_PUBLIC_GOOGLE_CLIENT_ID=$NEXT_PUBLIC_GOOGLE_CLIENT_ID
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-RUN npm run build
+RUN NEXT_PRIVATE_WORKER_THREADS=0 npm run build
 
 FROM node:22-alpine AS runner
 WORKDIR /app
