@@ -7,14 +7,23 @@ import {
   type SerializedDocument,
 } from '@/lib/serialization';
 import { ensureDb } from '@/server/db';
+import { logger } from '@/server/logger';
 import type { ListOptions } from '@verevoir/storage';
 
 export async function listAssets(
   options?: ListOptions,
 ): Promise<SerializedDocument[]> {
-  const db = await ensureDb();
-  const docs = await db.list('asset', options);
-  return serializeDocuments(docs);
+  try {
+    const db = await ensureDb();
+    const docs = await db.list('asset', options);
+    return serializeDocuments(docs);
+  } catch (err) {
+    logger.error('Failed to list assets', {
+      action: 'listAssets',
+      error: err instanceof Error ? err.message : String(err),
+    });
+    throw err;
+  }
 }
 
 export async function uploadAsset(formData: FormData): Promise<string> {
@@ -22,28 +31,62 @@ export async function uploadAsset(formData: FormData): Promise<string> {
   const createdBy = formData.get('createdBy') as string;
   if (!file) throw new Error('No file provided');
 
-  const manager = await getAssetManager();
-  const buffer = new Uint8Array(await file.arrayBuffer());
-  const asset = await manager.upload({
-    data: buffer,
-    filename: file.name,
-    contentType: file.type,
-    createdBy: createdBy || 'unknown',
-  });
-  return asset.id;
+  try {
+    const manager = await getAssetManager();
+    const buffer = new Uint8Array(await file.arrayBuffer());
+    const asset = await manager.upload({
+      data: buffer,
+      filename: file.name,
+      contentType: file.type,
+      createdBy: createdBy || 'unknown',
+    });
+    logger.info('Asset uploaded', {
+      action: 'uploadAsset',
+      assetId: asset.id,
+      filename: file.name,
+      contentType: file.type,
+    });
+    return asset.id;
+  } catch (err) {
+    logger.error('Failed to upload asset', {
+      action: 'uploadAsset',
+      filename: file.name,
+      error: err instanceof Error ? err.message : String(err),
+    });
+    throw err;
+  }
 }
 
 export async function deleteAsset(id: string): Promise<void> {
-  const manager = await getAssetManager();
-  await manager.delete(id);
+  try {
+    const manager = await getAssetManager();
+    await manager.delete(id);
+    logger.info('Asset deleted', { action: 'deleteAsset', assetId: id });
+  } catch (err) {
+    logger.error('Failed to delete asset', {
+      action: 'deleteAsset',
+      assetId: id,
+      error: err instanceof Error ? err.message : String(err),
+    });
+    throw err;
+  }
 }
 
 export async function updateAssetHotspot(
   id: string,
   hotspot: { x: number; y: number } | null,
 ): Promise<void> {
-  const manager = await getAssetManager();
-  await manager.updateMetadata(id, { hotspot });
+  try {
+    const manager = await getAssetManager();
+    await manager.updateMetadata(id, { hotspot });
+  } catch (err) {
+    logger.error('Failed to update asset hotspot', {
+      action: 'updateAssetHotspot',
+      assetId: id,
+      error: err instanceof Error ? err.message : String(err),
+    });
+    throw err;
+  }
 }
 
 export async function getAssetBlobUrl(blobKey: string): Promise<string> {
@@ -57,7 +100,12 @@ export async function getBlobData(blobKey: string): Promise<Uint8Array | null> {
     const result = await blobStore.get(blobKey);
     if (!result) return null;
     return result.data;
-  } catch {
+  } catch (err) {
+    logger.error('Failed to get blob data', {
+      action: 'getBlobData',
+      blobKey,
+      error: err instanceof Error ? err.message : String(err),
+    });
     return null;
   }
 }

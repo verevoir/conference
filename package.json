@@ -10,7 +10,10 @@
     "lint": "eslint . && prettier --check ."
   },
   "dependencies": {
+    "@google-cloud/opentelemetry-cloud-trace-exporter": "^3.0.0",
     "@google-cloud/storage": "^7.19.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.71.0",
+    "@opentelemetry/sdk-node": "^0.213.0",
     "@verevoir/access": "0.2.0-alpha.1",
     "@verevoir/assets": "0.2.0-alpha.1",
     "@verevoir/editor": "0.3.0-alpha.1",
