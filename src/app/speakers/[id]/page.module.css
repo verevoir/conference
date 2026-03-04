@@ -1,0 +1,31 @@
+.backLink {
+  font-size: var(--text-base);
+}
+
+.title {
+  margin-top: var(--space-md);
+}
+
+.meta {
+  color: var(--color-text-muted);
+  margin: 4px 0;
+}
+
+.bio {
+  margin-top: var(--space-md);
+}
+
+.email {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+}
+
+.talksSection {
+  margin-top: var(--space-xl);
+}
+
+.talkList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}

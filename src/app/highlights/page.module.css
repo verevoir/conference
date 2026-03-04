@@ -1,0 +1,50 @@
+.empty {
+  color: var(--color-text-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+.card {
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: box-shadow var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.cardTitle {
+  margin: 0 0 8px;
+}
+
+.yearBadge {
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-light);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.description {
+  font-size: var(--text-base);
+  margin: 8px 0;
+}
+
+.stat {
+  font-weight: 700;
+  font-size: var(--text-lg);
+  margin: 8px 0 0;
+  color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

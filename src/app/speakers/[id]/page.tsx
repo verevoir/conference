@@ -6,6 +6,7 @@ import { PublicShell } from '@/components/public/PublicShell';
 import { TalkCard } from '@/components/public/TalkCard';
 import { getDocument, listDocuments } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
+import styles from './page.module.css';
 
 export default function SpeakerDetailPage({
   params,
@@ -43,17 +44,17 @@ export default function SpeakerDetailPage({
 
   return (
     <PublicShell>
-      <Link href="/speakers" style={{ fontSize: '0.875rem' }}>
+      <Link href="/speakers" className={styles.backLink}>
         &larr; All speakers
       </Link>
-      <h1 style={{ marginTop: 'var(--space-md)' }}>{name}</h1>
+      <h1 className={styles.title}>{name}</h1>
       {jobTitle && (
-        <p style={metaStyle}>
+        <p className={styles.meta}>
           {jobTitle}
           {company ? ` at ${company}` : ''}
         </p>
       )}
-      {bio && <div style={{ marginTop: 'var(--space-md)' }}>{bio}</div>}
+      {bio && <div className={styles.bio}>{bio}</div>}
       {website && (
         <p>
           <a href={website} target="_blank" rel="noopener noreferrer">
@@ -61,22 +62,12 @@ export default function SpeakerDetailPage({
           </a>
         </p>
       )}
-      {email && (
-        <p style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
-          {email}
-        </p>
-      )}
+      {email && <p className={styles.email}>{email}</p>}
 
       {talks.length > 0 && (
-        <section style={{ marginTop: 'var(--space-xl)' }}>
+        <section className={styles.talksSection}>
           <h2>Talks</h2>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'var(--space-md)',
-            }}
-          >
+          <div className={styles.talkList}>
             {talks.map((t) => {
               const track = tracks.get(t.data.trackId as string);
               return (
@@ -94,8 +85,3 @@ export default function SpeakerDetailPage({
     </PublicShell>
   );
 }
-
-const metaStyle: React.CSSProperties = {
-  color: 'var(--color-text-muted)',
-  margin: '4px 0',
-};

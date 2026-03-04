@@ -1,0 +1,70 @@
+.hero {
+  text-align: center;
+  padding: var(--space-xl) 0;
+}
+
+.heroTitle {
+  font-size: var(--text-hero);
+  margin: 0 0 8px;
+}
+
+.tagline {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  margin: 0 0 16px;
+}
+
+.date {
+  font-size: var(--text-md);
+  margin: 0 0 8px;
+}
+
+.ctaRow {
+  margin-top: var(--space-lg);
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.section {
+  margin-top: var(--space-xl);
+}
+
+.speakerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-md);
+}
+
+.sponsorGrid {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sponsorCard {
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: box-shadow var(--transition-base);
+}
+
+.sponsorCard:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 640px) {
+  .heroTitle {
+    font-size: var(--text-2xl);
+  }
+
+  .ctaRow {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .speakerGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

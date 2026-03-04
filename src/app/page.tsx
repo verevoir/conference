@@ -6,6 +6,8 @@ import { PublicShell } from '@/components/public/PublicShell';
 import { SpeakerCard } from '@/components/public/SpeakerCard';
 import { listDocuments } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
+import btn from '@/styles/Button.module.css';
+import styles from './page.module.css';
 
 export default function HomePage() {
   const [config, setConfig] = useState<Record<string, unknown> | null>(null);
@@ -22,43 +24,35 @@ export default function HomePage() {
 
   return (
     <PublicShell>
-      <section style={heroStyle}>
-        <h1 style={{ fontSize: '2.5rem', margin: '0 0 8px' }}>
+      <section className={styles.hero}>
+        <h1 className={styles.heroTitle}>
           {config?.conferenceName
             ? String(config.conferenceName)
             : 'Conference'}
         </h1>
         {config?.tagline ? (
-          <p
-            style={{
-              fontSize: '1.25rem',
-              color: 'var(--color-text-muted)',
-              margin: '0 0 16px',
-            }}
-          >
-            {String(config.tagline)}
-          </p>
+          <p className={styles.tagline}>{String(config.tagline)}</p>
         ) : null}
         {config?.date ? (
-          <p style={{ fontSize: '1rem', margin: '0 0 8px' }}>
+          <p className={styles.date}>
             {String(config.date)}{' '}
             {config?.venue ? `\u2022 ${String(config.venue)}` : ''}
           </p>
         ) : null}
-        <div style={{ marginTop: 'var(--space-lg)', display: 'flex', gap: 12 }}>
-          <Link href="/schedule" style={ctaStyle}>
+        <div className={styles.ctaRow}>
+          <Link href="/schedule" className={`${btn.primary} ${btn.lg}`}>
             View Schedule
           </Link>
-          <Link href="/speakers" style={ctaSecondary}>
+          <Link href="/speakers" className={`${btn.outline} ${btn.lg}`}>
             Speakers
           </Link>
         </div>
       </section>
 
       {speakers.length > 0 && (
-        <section style={{ marginTop: 'var(--space-xl)' }}>
+        <section className={styles.section}>
           <h2>Featured Speakers</h2>
-          <div style={gridStyle}>
+          <div className={styles.speakerGrid}>
             {speakers.map((s) => (
               <SpeakerCard key={s.id} speaker={s} />
             ))}
@@ -67,11 +61,11 @@ export default function HomePage() {
       )}
 
       {sponsors.length > 0 && (
-        <section style={{ marginTop: 'var(--space-xl)' }}>
+        <section className={styles.section}>
           <h2>Sponsors</h2>
-          <div style={sponsorGridStyle}>
+          <div className={styles.sponsorGrid}>
             {sponsors.map((s) => (
-              <div key={s.id} style={sponsorCard}>
+              <div key={s.id} className={styles.sponsorCard}>
                 <strong>{String(s.data.name)}</strong>
               </div>
             ))}
@@ -81,45 +75,3 @@ export default function HomePage() {
     </PublicShell>
   );
 }
-
-const heroStyle: React.CSSProperties = {
-  textAlign: 'center',
-  padding: 'var(--space-xl) 0',
-};
-
-const ctaStyle: React.CSSProperties = {
-  padding: '12px 24px',
-  background: 'var(--color-primary)',
-  color: '#fff',
-  textDecoration: 'none',
-  borderRadius: 6,
-  fontWeight: 600,
-};
-
-const ctaSecondary: React.CSSProperties = {
-  padding: '12px 24px',
-  border: '1px solid var(--color-primary)',
-  color: 'var(--color-primary)',
-  textDecoration: 'none',
-  borderRadius: 6,
-  fontWeight: 600,
-};
-
-const gridStyle: React.CSSProperties = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-  gap: 'var(--space-md)',
-};
-
-const sponsorGridStyle: React.CSSProperties = {
-  display: 'flex',
-  gap: 'var(--space-md)',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-};
-
-const sponsorCard: React.CSSProperties = {
-  padding: 'var(--space-md) var(--space-lg)',
-  border: '1px solid var(--color-border)',
-  borderRadius: 8,
-};

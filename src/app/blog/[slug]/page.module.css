@@ -1,0 +1,16 @@
+.backLink {
+  font-size: var(--text-base);
+}
+
+.title {
+  margin-top: var(--space-md);
+}
+
+.postMeta {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+}
+
+.body {
+  margin-top: var(--space-lg);
+}

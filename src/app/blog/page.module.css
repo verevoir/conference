@@ -1,0 +1,40 @@
+.empty {
+  color: var(--color-text-muted);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.postCard {
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.postCard:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-md);
+}
+
+.postCard:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.postTitle {
+  margin: 0 0 4px;
+  font-size: var(--text-lg);
+}
+
+.postDate {
+  margin: 0;
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+}

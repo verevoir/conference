@@ -4,6 +4,7 @@ import { use, useEffect, useState } from 'react';
 import { PublicShell } from '@/components/public/PublicShell';
 import { listDocuments } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
+import styles from './page.module.css';
 
 export default function StaticPage({
   params,
@@ -45,9 +46,7 @@ export default function StaticPage({
   return (
     <PublicShell>
       <h1>{String(page.data.title)}</h1>
-      <div style={{ marginTop: 'var(--space-lg)' }}>
-        {String(page.data.body)}
-      </div>
+      <div className={styles.body}>{String(page.data.body)}</div>
     </PublicShell>
   );
 }

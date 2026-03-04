@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { PublicShell } from '@/components/public/PublicShell';
 import { listDocuments, getDocument } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
+import styles from './page.module.css';
 
 export default function BlogPostPage({
   params,
@@ -39,19 +40,15 @@ export default function BlogPostPage({
 
   return (
     <PublicShell>
-      <Link href="/blog" style={{ fontSize: '0.875rem' }}>
+      <Link href="/blog" className={styles.backLink}>
         &larr; All posts
       </Link>
-      <h1 style={{ marginTop: 'var(--space-md)' }}>
-        {String(post.data.title)}
-      </h1>
-      <p style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
+      <h1 className={styles.title}>{String(post.data.title)}</h1>
+      <p className={styles.postMeta}>
         {new Date(post.updatedAt).toLocaleDateString()}
         {author && ` \u2022 ${String(author.data.name)}`}
       </p>
-      <div style={{ marginTop: 'var(--space-lg)' }}>
-        {String(post.data.body)}
-      </div>
+      <div className={styles.body}>{String(post.data.body)}</div>
     </PublicShell>
   );
 }

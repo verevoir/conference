@@ -1,0 +1,37 @@
+.backLink {
+  font-size: var(--text-base);
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: var(--space-md);
+}
+
+.metaRow {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  margin-top: var(--space-xs);
+}
+
+.tag {
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-size: var(--text-sm);
+}
+
+.duration {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+}
+
+.speaker {
+  margin-top: var(--space-md);
+}
+
+.abstract {
+  margin-top: var(--space-lg);
+}

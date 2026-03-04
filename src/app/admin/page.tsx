@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { listDocuments } from '@/actions/documents';
 import Link from 'next/link';
+import styles from './page.module.css';
 
 const sections = [
   { type: 'talk', label: 'Talks', href: '/admin/talks' },
@@ -30,35 +31,14 @@ export default function AdminDashboard() {
   return (
     <div>
       <h1>Dashboard</h1>
-      <div style={gridStyle}>
+      <div className={styles.grid}>
         {sections.map(({ type, label, href }) => (
-          <Link key={type} href={href} style={cardStyle}>
-            <div style={{ fontSize: '2rem', fontWeight: 700 }}>
-              {counts[type] ?? '-'}
-            </div>
-            <div
-              style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}
-            >
-              {label}
-            </div>
+          <Link key={type} href={href} className={styles.card}>
+            <div className={styles.count}>{counts[type] ?? '-'}</div>
+            <div className={styles.label}>{label}</div>
           </Link>
         ))}
       </div>
     </div>
   );
 }
-
-const gridStyle: React.CSSProperties = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
-  gap: 'var(--space-md)',
-};
-
-const cardStyle: React.CSSProperties = {
-  padding: 'var(--space-lg)',
-  border: '1px solid var(--color-border)',
-  borderRadius: 8,
-  textDecoration: 'none',
-  color: 'inherit',
-  textAlign: 'center',
-};

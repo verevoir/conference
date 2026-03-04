@@ -7,6 +7,7 @@ import { BookmarkButton } from '@/components/public/BookmarkButton';
 import { FeedbackForm } from '@/components/public/FeedbackForm';
 import { getDocument, listDocuments } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
+import styles from './page.module.css';
 
 export default function TalkDetailPage({
   params,
@@ -50,25 +51,18 @@ export default function TalkDetailPage({
 
   return (
     <PublicShell>
-      <Link href="/schedule" style={{ fontSize: '0.875rem' }}>
+      <Link href="/schedule" className={styles.backLink}>
         &larr; Schedule
       </Link>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          marginTop: 'var(--space-md)',
-        }}
-      >
+      <div className={styles.titleRow}>
         <h1>{String(title)}</h1>
         <BookmarkButton talkId={id} />
       </div>
-      <div style={metaRow}>
+      <div className={styles.metaRow}>
         {track && (
           <span
+            className={styles.tag}
             style={{
-              ...tagStyle,
               background:
                 (track.data.color as string) ?? 'var(--color-primary-light)',
             }}
@@ -76,17 +70,13 @@ export default function TalkDetailPage({
             {String(track.data.name)}
           </span>
         )}
-        {level ? <span style={tagStyle}>{String(level)}</span> : null}
+        {level ? <span className={styles.tag}>{String(level)}</span> : null}
         {duration ? (
-          <span
-            style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}
-          >
-            {String(duration)} minutes
-          </span>
+          <span className={styles.duration}>{String(duration)} minutes</span>
         ) : null}
       </div>
       {speaker && (
-        <p style={{ marginTop: 'var(--space-md)' }}>
+        <p className={styles.speaker}>
           Speaker:{' '}
           <Link href={`/speakers/${speaker.id}`}>
             {String(speaker.data.name)}
@@ -94,24 +84,10 @@ export default function TalkDetailPage({
         </p>
       )}
       {abstract ? (
-        <div style={{ marginTop: 'var(--space-lg)' }}>{String(abstract)}</div>
+        <div className={styles.abstract}>{String(abstract)}</div>
       ) : null}
 
       {feedbackOpen && <FeedbackForm talkId={id} />}
     </PublicShell>
   );
 }
-
-const metaRow: React.CSSProperties = {
-  display: 'flex',
-  gap: 8,
-  alignItems: 'center',
-  marginTop: 'var(--space-xs)',
-};
-
-const tagStyle: React.CSSProperties = {
-  padding: '2px 8px',
-  borderRadius: 4,
-  background: 'var(--color-surface)',
-  fontSize: '0.8125rem',
-};

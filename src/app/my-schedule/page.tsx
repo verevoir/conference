@@ -7,6 +7,7 @@ import { useUser } from '@/context/UserContext';
 import { getMyBookmarks } from '@/actions/bookmarks';
 import { listDocuments } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
+import styles from './page.module.css';
 
 function MyScheduleContent() {
   const { identity, isAuthenticated } = useUser();
@@ -41,7 +42,7 @@ function MyScheduleContent() {
 
   if (!isAuthenticated) {
     return (
-      <p style={{ color: 'var(--color-text-muted)' }}>
+      <p className={styles.empty}>
         Sign in to build your personal schedule.
       </p>
     );
@@ -49,7 +50,7 @@ function MyScheduleContent() {
 
   if (slots.length === 0) {
     return (
-      <p style={{ color: 'var(--color-text-muted)' }}>
+      <p className={styles.empty}>
         No bookmarked talks yet. Browse the schedule and bookmark talks you want
         to attend.
       </p>
