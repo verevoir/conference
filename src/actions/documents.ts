@@ -1,12 +1,19 @@
 'use server';
 
+import { cookies } from 'next/headers';
 import { ensureDb } from '@/server/db';
+import { requireOrganiser } from '@/server/require-organiser';
 import {
   serializeDocument,
   serializeDocuments,
   type SerializedDocument,
 } from '@/lib/serialization';
 import type { ListOptions } from '@verevoir/storage';
+
+async function getToken(): Promise<string | null> {
+  const cookieStore = await cookies();
+  return cookieStore.get('auth-token')?.value ?? null;
+}
 
 export async function listDocuments(
   blockType: string,
@@ -30,6 +37,7 @@ export async function createDocument(
   blockType: string,
   data: Record<string, unknown>,
 ): Promise<SerializedDocument> {
+  await requireOrganiser(await getToken());
   const db = await ensureDb();
   const doc = await db.create(blockType, data);
   return serializeDocument(doc);
@@ -39,12 +47,14 @@ export async function updateDocument(
   id: string,
   data: Record<string, unknown>,
 ): Promise<SerializedDocument> {
+  await requireOrganiser(await getToken());
   const db = await ensureDb();
   const doc = await db.update(id, data);
   return serializeDocument(doc);
 }
 
 export async function deleteDocument(id: string): Promise<void> {
+  await requireOrganiser(await getToken());
   const db = await ensureDb();
   await db.delete(id);
 }

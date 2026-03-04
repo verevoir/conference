@@ -6,8 +6,9 @@ help: ## Show this help
 build: ## Build for production
 	npx next build
 
-test: ## Lint (no test suite yet)
+test: ## Lint and run tests
 	$(MAKE) lint
+	npx vitest run
 
 lint: ## Lint and check formatting
 	npx eslint .

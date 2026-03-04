@@ -47,7 +47,8 @@ See `.env.example` for the full list. Key variables:
 | Command             | Description                         |
 | ------------------- | ----------------------------------- |
 | `make build`        | Production build                    |
-| `make test`         | Lint check (eslint + prettier)      |
+| `make test`         | Lint + Vitest test suite            |
+| `make lint`         | eslint + prettier check             |
 | `make run`          | Start dev server (`AUTH_MODE=test`) |
 | `make docker-build` | Build Docker image                  |
 
@@ -56,8 +57,9 @@ See `.env.example` for the full list. Key variables:
 Infrastructure is defined in `infra/` as Terraform modules targeting GCP:
 
 - **Cloud Run** — containerised Next.js app (standalone output)
-- **AlloyDB** — managed Postgres for content and asset metadata
+- **AlloyDB** — managed Postgres for content and asset metadata (password auto-generated, stored in Secret Manager)
 - **GCS** — blob storage for uploaded assets
-- **IAM** — service account bindings
+- **HTTPS Load Balancer** — Google-managed SSL certificate
+- **IAM** — service account bindings (storage, AlloyDB, Secret Manager)
 
-See `infra/terraform.tfvars.example` for required configuration.
+See [docs/deployment.md](docs/deployment.md) for the full first-deploy walkthrough, or `infra/terraform.tfvars.example` for required configuration.
