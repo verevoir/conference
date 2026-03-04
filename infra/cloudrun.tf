@@ -18,8 +18,13 @@ resource "google_cloud_run_v2_service" "app" {
       }
 
       env {
-        name  = "DATABASE_URL"
-        value = "postgres://nextlake:${var.alloydb_password}@${google_alloydb_instance.primary.ip_address}:5432/conference"
+        name = "DATABASE_URL"
+        value_source {
+          secret_key_ref {
+            secret  = google_secret_manager_secret.database_url.secret_id
+            version = "latest"
+          }
+        }
       }
       env {
         name  = "GCS_BUCKET"

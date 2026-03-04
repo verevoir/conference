@@ -14,3 +14,9 @@ resource "google_project_iam_member" "cloudrun_alloydb" {
   role    = "roles/alloydb.client"
   member  = "serviceAccount:${google_service_account.cloudrun.email}"
 }
+
+resource "google_secret_manager_secret_iam_member" "cloudrun_database_url" {
+  secret_id = google_secret_manager_secret.database_url.secret_id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${google_service_account.cloudrun.email}"
+}

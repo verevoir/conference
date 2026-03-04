@@ -15,12 +15,6 @@ variable "conference_name" {
   default     = "nextlake-conference"
 }
 
-variable "alloydb_password" {
-  description = "AlloyDB primary user password"
-  type        = string
-  sensitive   = true
-}
-
 variable "gcs_bucket_name" {
   description = "GCS bucket for asset storage"
   type        = string
@@ -38,5 +32,10 @@ variable "seed_admin_id" {
 
 variable "docker_image" {
   description = "Container image URL for Cloud Run"
+  type        = string
+}
+
+variable "domain" {
+  description = "Custom domain for the conference app"
   type        = string
 }

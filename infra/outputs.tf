@@ -17,3 +17,8 @@ output "service_account" {
   description = "Cloud Run service account email"
   value       = google_service_account.cloudrun.email
 }
+
+output "lb_ip_address" {
+  description = "Load balancer IP — create a DNS A record pointing your domain to this"
+  value       = google_compute_global_address.lb.address
+}

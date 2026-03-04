@@ -1,0 +1,6 @@
+.next
+.env
+.env.local
+.git
+infra
+docs

@@ -33,7 +33,7 @@ resource "google_alloydb_cluster" "main" {
   }
   initial_user {
     user     = "nextlake"
-    password = var.alloydb_password
+    password = random_password.alloydb.result
   }
   depends_on = [google_service_networking_connection.psa]
 }
