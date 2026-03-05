@@ -46,6 +46,10 @@ resource "google_cloud_run_v2_service" "app" {
         name  = "SEED_ADMIN_ID"
         value = var.seed_admin_id
       }
+      env {
+        name  = "NODE_TLS_REJECT_UNAUTHORIZED"
+        value = "0"
+      }
 
       resources {
         limits = {

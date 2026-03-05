@@ -1,10 +1,12 @@
 'use client';
 
 import { use, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { PublicShell } from '@/components/public/PublicShell';
-import { listDocuments } from '@/actions/documents';
+import { ContentBlocks } from '@/components/public/ContentBlocks';
+import { listDocuments, getDocument } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
-import styles from './page.module.css';
+import type { ContentBlock } from '@/controls';
 
 export default function StaticPage({
   params,
@@ -12,19 +14,35 @@ export default function StaticPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = use(params);
+  const searchParams = useSearchParams();
+  const previewId = searchParams.get('preview');
   const [page, setPage] = useState<SerializedDocument | null>(null);
   const [notFound, setNotFound] = useState(false);
+  const [isPreview, setIsPreview] = useState(false);
 
   useEffect(() => {
-    listDocuments('page', { where: { slug } }).then((docs) => {
-      const found = docs.find((d) => d.data.slug === slug);
-      if (found) {
-        setPage(found);
-      } else {
-        setNotFound(true);
-      }
-    });
-  }, [slug]);
+    if (previewId) {
+      // Preview mode: load specific document version by ID
+      getDocument(previewId).then((doc) => {
+        if (doc) {
+          setPage(doc);
+          setIsPreview(true);
+        } else {
+          setNotFound(true);
+        }
+      });
+    } else {
+      // Public mode: only serve the published version
+      listDocuments('page', { where: { slug } }).then((docs) => {
+        const published = docs.find((d) => d.data.status === 'published');
+        if (published) {
+          setPage(published);
+        } else {
+          setNotFound(true);
+        }
+      });
+    }
+  }, [slug, previewId]);
 
   if (notFound) {
     return (
@@ -43,10 +61,30 @@ export default function StaticPage({
     );
   }
 
+  const content = Array.isArray(page.data.content)
+    ? (page.data.content as ContentBlock[])
+    : [];
+
   return (
     <PublicShell>
+      {isPreview && (
+        <div
+          style={{
+            background: '#fef3c7',
+            color: '#92400e',
+            padding: '8px 16px',
+            borderRadius: '4px',
+            marginBottom: '16px',
+            fontSize: '14px',
+            fontWeight: 600,
+          }}
+        >
+          Preview — v{String(page.data.version || 1)} (
+          {String(page.data.status || 'draft')})
+        </div>
+      )}
       <h1>{String(page.data.title)}</h1>
-      <div className={styles.body}>{String(page.data.body)}</div>
+      <ContentBlocks blocks={content} />
     </PublicShell>
   );
 }

@@ -1,0 +1,53 @@
+.content {
+  margin-top: var(--space-lg);
+}
+
+.block {
+  margin-bottom: var(--space-lg);
+}
+
+.block blockquote {
+  border-left: 3px solid var(--color-primary);
+  padding-left: var(--space-md);
+  margin: 0;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.block blockquote cite {
+  display: block;
+  margin-top: var(--space-sm);
+  font-style: normal;
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.block figure {
+  margin: 0;
+}
+
+.block figure img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+.block figcaption {
+  margin-top: var(--space-xs);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.block a[role='button'] {
+  display: inline-block;
+  padding: 12px 24px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.block a[role='button']:hover {
+  background: var(--color-primary-dark);
+}

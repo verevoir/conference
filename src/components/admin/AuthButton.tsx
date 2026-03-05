@@ -16,7 +16,7 @@ interface TestAccountInfo {
 export function AuthButton() {
   const { identity, isAuthenticated, isLoading, signIn, signOut } = useUser();
   const [accounts, setAccounts] = useState<TestAccountInfo[]>([]);
-  const [authMode, setAuthMode] = useState<string>('google');
+  const [authMode, setAuthMode] = useState<string | null>(null);
   const googleButtonRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -50,6 +50,9 @@ export function AuthButton() {
         theme: 'outline',
         size: 'large',
       });
+
+      // Show One Tap prompt for single-click sign-in
+      window.google.accounts.id.prompt();
     }
 
     // GIS script may already be loaded or still loading
@@ -66,6 +69,8 @@ export function AuthButton() {
       return () => clearInterval(interval);
     }
   }, [authMode, isAuthenticated, isLoading, signIn]);
+
+  if (authMode === null) return null;
 
   if (authMode === 'test') {
     if (isAuthenticated) {

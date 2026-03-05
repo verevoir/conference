@@ -89,6 +89,40 @@ export async function updateAssetHotspot(
   }
 }
 
+export async function updateAssetTags(
+  id: string,
+  tags: string[],
+): Promise<void> {
+  try {
+    const manager = await getAssetManager();
+    await manager.updateMetadata(id, { tags });
+  } catch (err) {
+    logger.error('Failed to update asset tags', {
+      action: 'updateAssetTags',
+      assetId: id,
+      error: err instanceof Error ? err.message : String(err),
+    });
+    throw err;
+  }
+}
+
+export async function updateAssetAttribution(
+  id: string,
+  attribution: string | null,
+): Promise<void> {
+  try {
+    const manager = await getAssetManager();
+    await manager.updateMetadata(id, { attribution });
+  } catch (err) {
+    logger.error('Failed to update asset attribution', {
+      action: 'updateAssetAttribution',
+      assetId: id,
+      error: err instanceof Error ? err.message : String(err),
+    });
+    throw err;
+  }
+}
+
 export async function getAssetBlobUrl(blobKey: string): Promise<string> {
   // Serve blobs via the API route
   return `/api/blobs/${encodeURIComponent(blobKey)}`;

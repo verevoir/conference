@@ -10,6 +10,16 @@ export const talkPublishing = defineWorkflow({
   ],
 });
 
+export const pagePublishing = defineWorkflow({
+  name: 'page-publishing',
+  states: ['draft', 'published', 'archived'],
+  initial: 'draft',
+  transitions: [
+    { from: 'draft', to: 'published', guard: hasRole('organiser') },
+    { from: 'published', to: 'draft', guard: hasRole('organiser') },
+  ],
+});
+
 export const blogPublishing = defineWorkflow({
   name: 'blog-publishing',
   states: ['draft', 'review', 'published', 'archived'],

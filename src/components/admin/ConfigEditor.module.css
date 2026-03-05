@@ -1,3 +1,11 @@
+.container {
+  max-width: var(--width-admin);
+}
+
 .toolbar {
-  margin-bottom: var(--space-lg);
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
 }

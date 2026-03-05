@@ -19,6 +19,7 @@ import {
 import { TalkStatusField, BlogStatusField } from './StatusField';
 import btn from '@/styles/Button.module.css';
 import form from '@/styles/Form.module.css';
+import editorForm from '@/styles/EditorForm.module.css';
 import styles from './DocumentEditor.module.css';
 
 interface DocumentEditorProps {
@@ -117,8 +118,27 @@ export function DocumentEditor({
   const label = blockType.charAt(0).toUpperCase() + blockType.slice(1);
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>{documentId ? `Edit ${label}` : `New ${label}`}</h1>
+      {!state.valid && (
+        <div className={form.error}>
+          {Object.entries(state.errors).map(([field, msg]) => (
+            <div key={field}>
+              <strong>{field}</strong>: {String(msg)}
+            </div>
+          ))}
+        </div>
+      )}
+      <ReferenceOptionsProvider options={refOptions}>
+        <div className={editorForm.form}>
+          <BlockEditor
+            block={block}
+            value={state.value}
+            onChange={actions.onChange}
+            overrides={getOverrides(blockType)}
+          />
+        </div>
+      </ReferenceOptionsProvider>
       <div className={styles.toolbar}>
         <button className={btn.secondary} onClick={() => router.push(backPath)}>
           Back
@@ -131,23 +151,6 @@ export function DocumentEditor({
           Save
         </button>
       </div>
-      {!state.valid && (
-        <div className={form.error}>
-          {Object.entries(state.errors).map(([field, msg]) => (
-            <div key={field}>
-              <strong>{field}</strong>: {String(msg)}
-            </div>
-          ))}
-        </div>
-      )}
-      <ReferenceOptionsProvider options={refOptions}>
-        <BlockEditor
-          block={block}
-          value={state.value}
-          onChange={actions.onChange}
-          overrides={getOverrides(blockType)}
-        />
-      </ReferenceOptionsProvider>
     </div>
   );
 }

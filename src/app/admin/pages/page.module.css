@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.empty {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.published {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.draft {
+  color: var(--color-text-muted);
+}
+
+.actionLink {
+  font-size: var(--text-sm);
+}

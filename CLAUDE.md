@@ -13,9 +13,10 @@ A delegate-first conference website powered by Verevoir, backed by GCP services 
 ## Structure
 
 - `src/blocks/` — Content model definitions (talk, speaker, track, sponsor, schedule-slot, post, page, organiser, highlight, feedback, bookmark, config)
-- `src/access/` — Policy (organiser/delegate/viewer roles) and workflows (talk + blog publishing)
+- `src/controls/` — Content controls (heading, paragraph, image, quote, cta) — each defines schema, editor, and renderer
+- `src/access/` — Policy (organiser/delegate/viewer roles) and workflows (talk, blog, and page publishing)
 - `src/server/` — Server singletons (db, blob-store, asset-manager, auth, roles, require-organiser)
-- `src/actions/` — Server Actions (documents, assets, auth, roles, feedback, bookmarks)
+- `src/actions/` — Server Actions (documents, pages, assets, auth, roles, feedback, bookmarks)
 - `src/lib/` — Serialization helpers for Server Action return values
 - `src/context/` — UserContext (identity, auth, policy, workflows)
 - `src/components/admin/` — Admin UI components
@@ -30,6 +31,10 @@ A delegate-first conference website powered by Verevoir, backed by GCP services 
 ## Content Models
 
 12 block types: talk, speaker, track, sponsor, schedule-slot, post, page, organiser, highlight, feedback, bookmark, config.
+
+## Pages
+
+Pages use a versioning model — multiple documents per slug with `version` number and `status` (draft/published/archived). At most one published version per slug. Content is a polymorphic array of content blocks, each backed by a control from `src/controls/`. The public `[slug]` route serves only published pages; `?preview=<docId>` loads a specific version for preview.
 
 ## Roles
 

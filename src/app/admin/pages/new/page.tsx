@@ -1,7 +1,7 @@
 'use client';
 
-import { DocumentEditor } from '@/components/admin/DocumentEditor';
+import { PageEditor } from '@/components/admin/PageEditor';
 
 export default function NewPagePage() {
-  return <DocumentEditor blockType="page" backPath="/admin/pages" />;
+  return <PageEditor />;
 }

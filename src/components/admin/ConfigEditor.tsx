@@ -11,6 +11,7 @@ import {
 } from '@/actions/documents';
 import btn from '@/styles/Button.module.css';
 import form from '@/styles/Form.module.css';
+import editorForm from '@/styles/EditorForm.module.css';
 import styles from './ConfigEditor.module.css';
 
 export function ConfigEditor() {
@@ -43,17 +44,8 @@ export function ConfigEditor() {
   if (!loaded) return null;
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Conference Config</h1>
-      <div className={styles.toolbar}>
-        <button
-          onClick={handleSave}
-          disabled={!can('update')}
-          className={can('update') ? btn.primary : btn.disabled}
-        >
-          Save
-        </button>
-      </div>
       {!state.valid && (
         <div className={form.error}>
           {Object.entries(state.errors).map(([field, msg]) => (
@@ -63,11 +55,22 @@ export function ConfigEditor() {
           ))}
         </div>
       )}
-      <BlockEditor
-        block={configBlock}
-        value={state.value}
-        onChange={actions.onChange}
-      />
+      <div className={editorForm.form}>
+        <BlockEditor
+          block={configBlock}
+          value={state.value}
+          onChange={actions.onChange}
+        />
+      </div>
+      <div className={styles.toolbar}>
+        <button
+          onClick={handleSave}
+          disabled={!can('update')}
+          className={can('update') ? btn.primary : btn.disabled}
+        >
+          Save
+        </button>
+      </div>
     </div>
   );
 }

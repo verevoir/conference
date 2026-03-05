@@ -11,7 +11,11 @@ import type { Identity } from '@verevoir/access';
 import { ANONYMOUS, isAnonymous } from '@verevoir/access';
 import { resolveToken } from '@/actions/auth';
 import { conferencePolicy } from '@/access/policy';
-import { talkPublishing, blogPublishing } from '@/access/workflow';
+import {
+  talkPublishing,
+  blogPublishing,
+  pagePublishing,
+} from '@/access/workflow';
 
 interface UserContextValue {
   identity: Identity;
@@ -22,6 +26,7 @@ interface UserContextValue {
   can: (action: string, context?: { ownerId?: string }) => boolean;
   talkWorkflow: typeof talkPublishing;
   blogWorkflow: typeof blogPublishing;
+  pageWorkflow: typeof pagePublishing;
 }
 
 const UserContext = createContext<UserContextValue | null>(null);
@@ -80,6 +85,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         can,
         talkWorkflow: talkPublishing,
         blogWorkflow: blogPublishing,
+        pageWorkflow: pagePublishing,
       }}
     >
       {children}

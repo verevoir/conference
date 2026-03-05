@@ -12,7 +12,7 @@ variable "region" {
 variable "conference_name" {
   description = "Name used for resource naming"
   type        = string
-  default     = "nextlake-conference"
+  default     = "verevoir-conference"
 }
 
 variable "gcs_bucket_name" {
