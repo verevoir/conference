@@ -31,7 +31,7 @@ export function AuthButton() {
   }, [authMode, isAuthenticated]);
 
   useEffect(() => {
-    if (authMode !== 'google' || isAuthenticated) return;
+    if (authMode !== 'google' || isAuthenticated || isLoading) return;
 
     const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
     if (!clientId) return;
@@ -65,7 +65,7 @@ export function AuthButton() {
       }, 100);
       return () => clearInterval(interval);
     }
-  }, [authMode, isAuthenticated, signIn]);
+  }, [authMode, isAuthenticated, isLoading, signIn]);
 
   if (authMode === 'test') {
     if (isAuthenticated) {

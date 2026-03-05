@@ -1,6 +1,6 @@
-# NextLake Conference
+# Verevoir Conference
 
-A delegate-first conference website powered by NextLake, backed by GCP services (AlloyDB, GCS, Google OAuth). Organisers manage all content through an admin interface. Delegates use the public site to browse the programme, build a personal schedule, and submit talk feedback.
+A delegate-first conference website powered by Verevoir, backed by GCP services (AlloyDB, GCS, Google OAuth). Organisers manage all content through an admin interface. Delegates use the public site to browse the programme, build a personal schedule, and submit talk feedback.
 
 ## Architecture
 

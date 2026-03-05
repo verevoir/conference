@@ -3,7 +3,7 @@ import Script from 'next/script';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'NextLake Conference',
+  title: 'Verevoir Conference',
 };
 
 export default function RootLayout({

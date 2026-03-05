@@ -1,10 +1,10 @@
-# NextLake Conference
+# Verevoir Conference
 
-A delegate-first conference website powered by [NextLake](https://github.com/adsurg/next-lake), backed by GCP services (AlloyDB, GCS, Google OAuth). Organisers manage all content through an admin interface. Delegates browse the programme, build a personal schedule, and submit talk feedback.
+A delegate-first conference website powered by [Verevoir](https://github.com/adsurg/next-lake), backed by GCP services (AlloyDB, GCS, Google OAuth). Organisers manage all content through an admin interface. Delegates browse the programme, build a personal schedule, and submit talk feedback.
 
 ## What this demonstrates
 
-This is a production-grade application showcasing all six NextLake packages working together:
+This is a production-grade application showcasing all six Verevoir packages working together:
 
 - **@verevoir/schema** — 12 content models (talks, speakers, tracks, sponsors, schedule slots, blog posts, pages, organisers, highlights, feedback, bookmarks, config)
 - **@verevoir/storage** — PostgresAdapter for AlloyDB persistence

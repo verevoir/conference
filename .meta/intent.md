@@ -1,16 +1,16 @@
-# Intent — NextLake Conference
+# Intent — Verevoir Conference
 
 ## Purpose
 
-Provide a production-grade conference website that showcases all six NextLake packages working together in a real-world scenario. The platform serves two audiences: organisers who manage content through an admin interface, and delegates who browse the programme, build personal schedules, and provide talk feedback.
+Provide a production-grade conference website that showcases all six Verevoir packages working together in a real-world scenario. The platform serves two audiences: organisers who manage content through an admin interface, and delegates who browse the programme, build personal schedules, and provide talk feedback.
 
 ## Goals
 
-- Demonstrate every NextLake package in a realistic, non-trivial application context
+- Demonstrate every Verevoir package in a realistic, non-trivial application context
 - Provide a delegate-first experience with personal schedule bookmarking and post-talk feedback
 - Support two deployment modes: local development (test accounts, in-memory) and production (GCP services)
 - Be open-sourceable as a standalone conference platform
-- Prove that NextLake works with production databases and cloud storage
+- Prove that Verevoir works with production databases and cloud storage
 
 ## Non-goals
 
@@ -18,7 +18,7 @@ Provide a production-grade conference website that showcases all six NextLake pa
 - Public voting — replaced by post-talk feedback (rating + comment)
 - Multi-tenancy — one deployment per conference
 - Real-time features — standard request/response patterns only
-- Custom CMS for content modelling — uses NextLake's schema engine directly
+- Custom CMS for content modelling — uses Verevoir's schema engine directly
 
 ## Key design decisions
 
