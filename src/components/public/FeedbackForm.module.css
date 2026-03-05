@@ -18,7 +18,9 @@
   cursor: pointer;
   padding: 0;
   color: var(--color-border);
-  transition: color var(--transition-fast), transform var(--transition-fast);
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .star:hover {

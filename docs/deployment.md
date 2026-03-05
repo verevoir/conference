@@ -36,16 +36,16 @@ cp terraform.tfvars.example terraform.tfvars
 
 Edit `terraform.tfvars` with your values:
 
-| Variable | Description |
-|----------|-------------|
-| `project_id` | GCP project ID |
-| `region` | GCP region (default: `europe-west2`) |
-| `conference_name` | Resource naming prefix |
-| `gcs_bucket_name` | GCS bucket name for assets |
-| `google_client_id` | Google OAuth client ID |
-| `seed_admin_id` | Your Google `sub` claim prefixed with `google-` (see below) |
-| `docker_image` | Artifact Registry image URL |
-| `domain` | Custom domain for the app |
+| Variable           | Description                                                 |
+| ------------------ | ----------------------------------------------------------- |
+| `project_id`       | GCP project ID                                              |
+| `region`           | GCP region (default: `europe-west2`)                        |
+| `conference_name`  | Resource naming prefix                                      |
+| `gcs_bucket_name`  | GCS bucket name for assets                                  |
+| `google_client_id` | Google OAuth client ID                                      |
+| `seed_admin_id`    | Your Google `sub` claim prefixed with `google-` (see below) |
+| `docker_image`     | Artifact Registry image URL                                 |
+| `domain`           | Custom domain for the app                                   |
 
 **Finding your seed admin ID:**
 
@@ -93,6 +93,7 @@ terraform apply
 ```
 
 This creates:
+
 - **VPC + subnet** for private networking
 - **AlloyDB** cluster and primary instance (password auto-generated, stored in Secret Manager)
 - **GCS bucket** for asset storage

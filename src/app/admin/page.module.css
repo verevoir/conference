@@ -12,7 +12,9 @@
   color: inherit;
   text-align: center;
   display: block;
-  transition: box-shadow var(--transition-base), border-color var(--transition-base);
+  transition:
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .card:hover {

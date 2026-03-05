@@ -44,7 +44,8 @@
   --width-admin: 960px;
   --height-header: 64px;
 
-  --focus-ring: 0 0 0 2px var(--color-primary-light), 0 0 0 4px var(--color-primary);
+  --focus-ring:
+    0 0 0 2px var(--color-primary-light), 0 0 0 4px var(--color-primary);
 }
 
 * {

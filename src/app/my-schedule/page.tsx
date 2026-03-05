@@ -42,9 +42,7 @@ function MyScheduleContent() {
 
   if (!isAuthenticated) {
     return (
-      <p className={styles.empty}>
-        Sign in to build your personal schedule.
-      </p>
+      <p className={styles.empty}>Sign in to build your personal schedule.</p>
     );
   }
 

@@ -15,7 +15,7 @@
     "@opentelemetry/auto-instrumentations-node": "^0.71.0",
     "@opentelemetry/sdk-node": "^0.213.0",
     "@verevoir/access": "0.2.0-alpha.1",
-    "@verevoir/assets": "^0.4.0-alpha.1",
+    "@verevoir/assets": "0.4.0-alpha.1",
     "@verevoir/editor": "0.3.0-alpha.1",
     "@verevoir/media": "0.2.0-alpha.1",
     "@verevoir/schema": "0.3.0-alpha.1",

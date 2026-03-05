@@ -8,9 +8,9 @@ This is a production-grade application showcasing all six Verevoir packages work
 
 - **@verevoir/schema** — 12 content models (talks, speakers, tracks, sponsors, schedule slots, blog posts, pages, organisers, highlights, feedback, bookmarks, config)
 - **@verevoir/storage** — PostgresAdapter for AlloyDB persistence
-- **@verevoir/editor** — Admin content editing UI with custom field overrides (StatusField, HeroImageField)
-- **@verevoir/access** — Google OAuth, role-based policies (organiser/delegate/viewer), publishing workflows
-- **@verevoir/assets** — GcsBlobStore for binary storage, AssetManager for upload/metadata
+- **@verevoir/editor** — Admin content editing UI with custom field overrides
+- **@verevoir/access** — Google OAuth, role-based policies (organiser/delegate/viewer), publishing workflows (talks, blog, pages)
+- **@verevoir/assets** — GcsBlobStore for binary storage, AssetManager for upload/metadata/tags/attribution
 - **@verevoir/media** — imgproxy URL generation, image blocks, hotspot editing
 
 ## Architecture
@@ -20,6 +20,8 @@ This is a production-grade application showcasing all six Verevoir packages work
 - **Blob serving** via `/api/blobs/[blobKey]` API route
 - **Auth modes** — `AUTH_MODE=test` for local dev (instant role switching), omit for real Google OAuth
 - **Standalone output** for Docker/Cloud Run deployment
+- **Content controls** — self-contained units in `src/controls/` (heading, paragraph, image, quote, cta), each co-locating schema, editor, and renderer
+- **Page versioning** — multiple document versions per slug with publish/unpublish/archive workflow; public routes serve only the published version, with `?preview=<docId>` for draft preview
 
 ## Setup
 

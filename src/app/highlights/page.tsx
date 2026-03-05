@@ -26,9 +26,7 @@ export default function HighlightsPage() {
               {h.data.year ? (
                 <span className={styles.yearBadge}>{String(h.data.year)}</span>
               ) : null}
-              <p className={styles.description}>
-                {String(h.data.description)}
-              </p>
+              <p className={styles.description}>{String(h.data.description)}</p>
               {h.data.stat ? (
                 <p className={styles.stat}>{String(h.data.stat)}</p>
               ) : null}

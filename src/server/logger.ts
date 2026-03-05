@@ -26,6 +26,5 @@ export const logger = {
   info: (message: string, fields?: LogFields) => log('INFO', message, fields),
   warn: (message: string, fields?: LogFields) =>
     log('WARNING', message, fields),
-  error: (message: string, fields?: LogFields) =>
-    log('ERROR', message, fields),
+  error: (message: string, fields?: LogFields) => log('ERROR', message, fields),
 };

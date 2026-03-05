@@ -10,7 +10,9 @@
   border-radius: var(--radius-sm);
   cursor: pointer;
   text-decoration: none;
-  transition: background var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
   line-height: 1.5;
 }
 

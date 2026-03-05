@@ -15,7 +15,9 @@
   text-decoration: none;
   color: inherit;
   display: block;
-  transition: box-shadow var(--transition-base), border-color var(--transition-base);
+  transition:
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .postCard:hover {

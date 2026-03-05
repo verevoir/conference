@@ -74,10 +74,7 @@ export function DocumentList({
                     {new Date(doc.updatedAt).toLocaleDateString()}
                   </td>
                   <td className={table.td}>
-                    <Link
-                      href={editPath(doc.id)}
-                      className={styles.actionLink}
-                    >
+                    <Link href={editPath(doc.id)} className={styles.actionLink}>
                       Edit
                     </Link>
                     {can('delete') && (
