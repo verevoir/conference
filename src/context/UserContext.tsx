@@ -26,32 +26,34 @@ interface UserContextValue {
 
 const UserContext = createContext<UserContextValue | null>(null);
 
-export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [token, setToken] = useState<string | null>(null);
-  const [identity, setIdentity] = useState<Identity>(ANONYMOUS);
-  const [isLoading, setIsLoading] = useState(true);
+function readCookieToken(): string | null {
+  if (typeof document === 'undefined') return null;
+  const match = document.cookie.match(/(?:^|;\s*)auth-token=([^;]*)/);
+  return match ? decodeURIComponent(match[1]) : null;
+}
 
-  useEffect(() => {
-    const match = document.cookie.match(/(?:^|;\s*)auth-token=([^;]*)/);
-    const saved = match ? decodeURIComponent(match[1]) : null;
-    if (saved) {
-      setToken(saved);
-    } else {
-      setIsLoading(false);
-    }
-  }, []);
+export function UserProvider({ children }: { children: React.ReactNode }) {
+  const [token, setToken] = useState<string | null>(readCookieToken);
+  const [identity, setIdentity] = useState<Identity>(ANONYMOUS);
+  const [isLoading, setIsLoading] = useState(() => readCookieToken() !== null);
 
   useEffect(() => {
     if (!token) return;
-    setIsLoading(true);
-    resolveToken(token).then((id) => {
-      if (id) setIdentity(id);
-      setIsLoading(false);
-    });
+    resolveToken(token)
+      .then((id) => {
+        if (id) setIdentity(id);
+      })
+      .catch(() => {
+        // Auth system unavailable — fall back to anonymous
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [token]);
 
   const signIn = useCallback((t: string) => {
     document.cookie = `auth-token=${encodeURIComponent(t)}; path=/; SameSite=Lax`;
+    setIsLoading(true);
     setToken(t);
   }, []);
   const signOut = useCallback(() => {
