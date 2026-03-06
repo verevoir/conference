@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useUser } from '@/context/UserContext';
@@ -26,15 +27,25 @@ const navItems = [
 export function AdminSidebar() {
   const pathname = usePathname();
   const { can } = useUser();
+  const [collapsed, setCollapsed] = useState(false);
 
   if (!can('read')) return null;
 
   return (
-    <aside className={styles.sidebar}>
+    <aside
+      className={`${styles.sidebar} ${collapsed ? styles.sidebarCollapsed : ''}`}
+    >
       <div className={styles.brand}>
         <Link href="/" className={styles.brandLink}>
           <strong>Conference Admin</strong>
         </Link>
+        <button
+          className={styles.collapseBtn}
+          onClick={() => setCollapsed(!collapsed)}
+          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        >
+          {collapsed ? '\u25B6' : '\u25C0'}
+        </button>
       </div>
       <div className={styles.authSection}>
         <AuthButton />

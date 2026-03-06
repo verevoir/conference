@@ -1,11 +1,12 @@
 .container {
-  max-width: var(--width-admin);
+  max-width: none;
 }
 
 .titleRow {
   display: flex;
   align-items: center;
   gap: var(--space-md);
+  margin-bottom: var(--space-lg);
 }
 
 .badge {
@@ -34,11 +35,57 @@
   color: #92400e;
 }
 
+/* --- Split layout --- */
+
+.splitLayout {
+  display: flex;
+  gap: var(--space-xl);
+  align-items: flex-start;
+}
+
+.previewPane {
+  width: 50vw;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.editPane {
+  flex: 1;
+  min-width: 0;
+  position: sticky;
+  top: var(--space-lg);
+  max-height: calc(100vh - 2 * var(--space-lg));
+  overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+  .splitLayout {
+    flex-direction: column;
+  }
+
+  .previewPane {
+    width: 100%;
+  }
+
+  .editPane {
+    width: 100%;
+    position: static;
+    max-height: none;
+  }
+}
+
+/* --- Sections --- */
+
 .sectionHeading {
   margin-top: var(--space-xl);
   margin-bottom: var(--space-md);
   padding-bottom: var(--space-sm);
   border-bottom: 2px solid var(--color-border);
+  font-size: var(--text-lg);
+}
+
+.sectionHeading:first-child {
+  margin-top: 0;
 }
 
 .blockList {

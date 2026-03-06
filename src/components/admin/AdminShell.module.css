@@ -6,7 +6,7 @@
 .main {
   flex: 1;
   padding: var(--space-xl);
-  max-width: var(--width-admin);
+  min-width: 0;
 }
 
 @media (max-width: 768px) {

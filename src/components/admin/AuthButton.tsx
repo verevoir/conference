@@ -24,11 +24,8 @@ export function AuthButton() {
     getTestAccounts().then(setAccounts);
   }, []);
 
-  useEffect(() => {
-    if (authMode === 'google' && isAuthenticated) {
-      window.google?.accounts.id.cancel();
-    }
-  }, [authMode, isAuthenticated]);
+  // Track a key to force re-mount of the Google button container after sign-out
+  const [gisKey, setGisKey] = useState(0);
 
   useEffect(() => {
     if (authMode !== 'google' || isAuthenticated || isLoading) return;
@@ -51,15 +48,12 @@ export function AuthButton() {
         size: 'large',
       });
 
-      // Show One Tap prompt for single-click sign-in
       window.google.accounts.id.prompt();
     }
 
-    // GIS script may already be loaded or still loading
     if (window.google?.accounts?.id) {
       initGis();
     } else {
-      // Poll briefly for the script to load
       const interval = setInterval(() => {
         if (window.google?.accounts?.id) {
           clearInterval(interval);
@@ -68,7 +62,7 @@ export function AuthButton() {
       }, 100);
       return () => clearInterval(interval);
     }
-  }, [authMode, isAuthenticated, isLoading, signIn]);
+  }, [authMode, isAuthenticated, isLoading, signIn, gisKey]);
 
   if (authMode === null) return null;
 
@@ -110,7 +104,9 @@ export function AuthButton() {
         <button
           onClick={() => {
             window.google?.accounts.id.disableAutoSelect();
+            window.google?.accounts.id.cancel();
             signOut();
+            setGisKey((k) => k + 1);
           }}
           className={btn.subtle}
         >
@@ -122,5 +118,5 @@ export function AuthButton() {
 
   if (isLoading) return null;
 
-  return <div ref={googleButtonRef} />;
+  return <div key={gisKey} ref={googleButtonRef} />;
 }

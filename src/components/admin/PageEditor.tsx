@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { BlockEditor, useBlockForm } from '@verevoir/editor';
+import { BlockEditor, useBlockForm, PreviewFrame } from '@verevoir/editor';
 import type { FieldOverrides } from '@verevoir/editor';
 import { page as pageBlock } from '@/blocks/page';
 import { useUser } from '@/context/UserContext';
@@ -20,11 +20,13 @@ import {
 import { controls, controlList } from '@/controls';
 import type { ContentBlock } from '@/controls';
 import { ContentBlockEditor } from './ContentBlockEditor';
+import { ContentBlocks } from '@/components/public/ContentBlocks';
 import { PageStatusField } from './PageStatusField';
 import type { SerializedDocument } from '@/lib/serialization';
 import btn from '@/styles/Button.module.css';
 import form from '@/styles/Form.module.css';
 import editorForm from '@/styles/EditorForm.module.css';
+import '@/styles/preview-frame.css';
 import styles from './PageEditor.module.css';
 
 interface PageEditorProps {
@@ -53,7 +55,6 @@ export function PageEditor({ documentId }: PageEditorProps) {
               ? (doc.data.content as ContentBlock[])
               : [],
           );
-          // Load version history
           if (doc.data.slug) {
             listPageVersions(String(doc.data.slug)).then(setVersions);
           }
@@ -90,7 +91,6 @@ export function PageEditor({ documentId }: PageEditorProps) {
 
   const handlePublish = async () => {
     if (!documentId) return;
-    // Save first, then publish
     if (!actions.validate()) return;
     await updateDocument(documentId, {
       ...state.value,
@@ -142,7 +142,7 @@ export function PageEditor({ documentId }: PageEditorProps) {
   return (
     <div className={styles.container}>
       <div className={styles.titleRow}>
-        <h1>{isNew ? 'New Page' : `Edit Page`}</h1>
+        <h1>{isNew ? 'New Page' : 'Edit Page'}</h1>
         {!isNew && (
           <span className={`${styles.badge} ${styles[`badge_${status}`]}`}>
             v{version} &middot; {status}
@@ -160,47 +160,59 @@ export function PageEditor({ documentId }: PageEditorProps) {
         </div>
       )}
 
-      <div className={editorForm.form}>
-        <BlockEditor
-          block={pageBlock}
-          value={state.value}
-          onChange={actions.onChange}
-          overrides={overrides}
-        />
-      </div>
-
-      <h2 className={styles.sectionHeading}>Content</h2>
-      <div className={styles.blockList}>
-        {content.map((block, index) => {
-          const control = controls[block.type];
-          if (!control) return null;
-          return (
-            <ContentBlockEditor
-              key={index}
-              control={control}
-              data={block}
-              index={index}
-              total={content.length}
-              onChange={(data) => handleUpdateBlock(index, data)}
-              onRemove={() => handleRemoveBlock(index)}
-              onMove={(dir) => handleMoveBlock(index, dir)}
-            />
-          );
-        })}
-      </div>
-      {!isArchived && (
-        <div className={styles.addBar}>
-          {controlList.map((c) => (
-            <button
-              key={c.type}
-              className={btn.outline}
-              onClick={() => handleAddBlock(c.type)}
-            >
-              + {c.label}
-            </button>
-          ))}
+      <div className={styles.splitLayout}>
+        <div className={styles.previewPane}>
+          <PreviewFrame>
+            <h1>{String(state.value.title || 'Untitled Page')}</h1>
+            <ContentBlocks blocks={content} />
+          </PreviewFrame>
         </div>
-      )}
+
+        <div className={styles.editPane}>
+          <h2 className={styles.sectionHeading}>Page Settings</h2>
+          <div className={editorForm.form}>
+            <BlockEditor
+              block={pageBlock}
+              value={state.value}
+              onChange={actions.onChange}
+              overrides={overrides}
+            />
+          </div>
+
+          <h2 className={styles.sectionHeading}>Content</h2>
+          <div className={styles.blockList}>
+            {content.map((block, index) => {
+              const control = controls[block.type];
+              if (!control) return null;
+              return (
+                <ContentBlockEditor
+                  key={index}
+                  control={control}
+                  data={block}
+                  index={index}
+                  total={content.length}
+                  onChange={(data) => handleUpdateBlock(index, data)}
+                  onRemove={() => handleRemoveBlock(index)}
+                  onMove={(dir) => handleMoveBlock(index, dir)}
+                />
+              );
+            })}
+          </div>
+          {!isArchived && (
+            <div className={styles.addBar}>
+              {controlList.map((c) => (
+                <button
+                  key={c.type}
+                  className={btn.outline}
+                  onClick={() => handleAddBlock(c.type)}
+                >
+                  + {c.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
 
       {versions.length > 1 && (
         <>
