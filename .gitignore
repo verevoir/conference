@@ -11,3 +11,8 @@ infra/*.tfstate
 infra/*.tfstate.backup
 infra/.terraform.lock.hcl
 infra/terraform.tfvars
+project-infra/.terraform/
+project-infra/*.tfstate
+project-infra/*.tfstate.backup
+project-infra/.terraform.lock.hcl
+project-infra/terraform.tfvars

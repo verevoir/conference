@@ -1,6 +1,9 @@
 # Deploying to GCP
 
-The conference app runs on Cloud Run backed by AlloyDB (Postgres), GCS (asset storage), and Google OAuth. All infrastructure is managed via Terraform in `infra/`.
+The conference app runs on Cloud Run backed by AlloyDB (Postgres), GCS (asset storage), and Google OAuth. Infrastructure is split across two Terraform configurations:
+
+- **`project-infra/`** — project-level resources (Workload Identity Federation, CI service account, Artifact Registry IAM). Run once per GCP project.
+- **`infra/`** — environment resources (Cloud Run, AlloyDB, GCS, networking, load balancer). Run per environment.
 
 ## Prerequisites
 
@@ -124,9 +127,31 @@ The Google-managed SSL certificate will provision automatically once DNS propaga
 - **terraform.tfvars** — gitignored. Contains OAuth client ID and seed admin ID but no secrets.
 - **Terraform state** — contains the generated password. Use a [remote backend](https://developer.hashicorp.com/terraform/language/backend) with encryption for production.
 
+## 5. Set up CI/CD (one-time)
+
+The project uses GitHub Actions for automated deployment on push to `main`. This requires a Workload Identity Federation pool and a CI service account.
+
+```bash
+cd project-infra
+cp terraform.tfvars.example terraform.tfvars
+# Edit terraform.tfvars with your values
+terraform init
+terraform apply
+```
+
+Then add three GitHub repository secrets (values from `terraform output`):
+
+| Secret                         | Source                                        |
+| ------------------------------ | --------------------------------------------- |
+| `WIF_PROVIDER`                 | `terraform output workload_identity_provider` |
+| `WIF_SERVICE_ACCOUNT`          | `terraform output ci_service_account`         |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Your Google OAuth client ID                   |
+
+After this, every push to `main` will automatically lint, test, build, and deploy.
+
 ## Updating
 
-To deploy a new version:
+Pushes to `main` trigger automatic deployment via GitHub Actions. For manual deployment:
 
 ```bash
 # Build and push new image

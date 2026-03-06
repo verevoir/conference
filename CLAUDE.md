@@ -25,7 +25,9 @@ A delegate-first conference website powered by Verevoir, backed by GCP services 
 - `src/app/` — Public routes
 - `src/app/api/` — API routes (blob serving)
 - `tests/` — Vitest tests (policy, auth, require-organiser)
-- `infra/` — Terraform for GCP deployment
+- `project-infra/` — Project-level Terraform (Workload Identity Federation, CI service account)
+- `infra/` — Environment Terraform (Cloud Run, AlloyDB, GCS, networking, LB)
+- `.github/workflows/` — CI/CD (deploy on push to main)
 - `docs/deployment.md` — GCP first-deploy and update guide
 
 ## Content Models
