@@ -1,5 +1,5 @@
 project_id      = "verevoir"
 region          = "europe-west2"
 conference_name = "verevoir-conference"
-github_owner    = "adsurg"
-github_repo     = "adsurg/next-lake-conference"
+github_owner    = "verevoir"
+github_repo     = "verevoir/conference"

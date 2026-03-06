@@ -1,6 +1,6 @@
 # Verevoir Conference
 
-A delegate-first conference website powered by [Verevoir](https://github.com/adsurg/next-lake), backed by GCP services (AlloyDB, GCS, Google OAuth). Organisers manage all content through an admin interface. Delegates browse the programme, build a personal schedule, and submit talk feedback.
+A delegate-first conference website powered by [Verevoir](https://github.com/verevoir/verevoir), backed by GCP services (AlloyDB, GCS, Google OAuth). Organisers manage all content through an admin interface. Delegates browse the programme, build a personal schedule, and submit talk feedback.
 
 ## What this demonstrates
 
