@@ -1,8 +1,6 @@
 'use client';
 
-import {
-  InteractiveContentBlocks as InteractiveBlocks,
-} from '@verevoir/editor-premium';
+import { InteractiveContentBlocks as InteractiveBlocks } from '@verevoir/editor-premium';
 import '@verevoir/editor-premium/styles/interactive-editor.css';
 import { controls, controlList } from '@/controls';
 import type { ContentBlock } from '@/controls';

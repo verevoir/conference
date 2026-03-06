@@ -143,7 +143,10 @@ export function PageEditor({ documentId }: PageEditorProps) {
             {isArchived ? (
               <InteractiveContentBlocks blocks={content} onChange={() => {}} />
             ) : (
-              <InteractiveContentBlocks blocks={content} onChange={setContent} />
+              <InteractiveContentBlocks
+                blocks={content}
+                onChange={setContent}
+              />
             )}
           </PreviewFrame>
         </div>
