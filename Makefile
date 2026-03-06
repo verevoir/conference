@@ -15,7 +15,7 @@ lint: ## Lint and check formatting
 	npx prettier --check .
 
 run: ## Start Next.js dev server
-	AUTH_MODE=test npx next dev -p 3847
+	npx next dev -p 3847
 
 docker-build: ## Build Docker image
 	docker build -t nextlake-conference .

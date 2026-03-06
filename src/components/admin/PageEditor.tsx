@@ -17,10 +17,8 @@ import {
   createNewVersion,
   listPageVersions,
 } from '@/actions/pages';
-import { controls, controlList } from '@/controls';
 import type { ContentBlock } from '@/controls';
-import { ContentBlockEditor } from './ContentBlockEditor';
-import { ContentBlocks } from '@/components/public/ContentBlocks';
+import { InteractiveContentBlocks } from './InteractiveContentBlocks';
 import { PageStatusField } from './PageStatusField';
 import type { SerializedDocument } from '@/lib/serialization';
 import btn from '@/styles/Button.module.css';
@@ -113,28 +111,6 @@ export function PageEditor({ documentId }: PageEditorProps) {
     router.push(`/admin/pages/${newDoc.id}`);
   };
 
-  const handleAddBlock = (type: string) => {
-    setContent([...content, { type }]);
-  };
-
-  const handleUpdateBlock = (index: number, data: ContentBlock) => {
-    const next = [...content];
-    next[index] = data;
-    setContent(next);
-  };
-
-  const handleRemoveBlock = (index: number) => {
-    setContent(content.filter((_, i) => i !== index));
-  };
-
-  const handleMoveBlock = (index: number, direction: -1 | 1) => {
-    const target = index + direction;
-    if (target < 0 || target >= content.length) return;
-    const next = [...content];
-    [next[index], next[target]] = [next[target], next[index]];
-    setContent(next);
-  };
-
   if (!loaded) return null;
 
   const isArchived = status === 'archived';
@@ -164,7 +140,11 @@ export function PageEditor({ documentId }: PageEditorProps) {
         <div className={styles.previewPane}>
           <PreviewFrame>
             <h1>{String(state.value.title || 'Untitled Page')}</h1>
-            <ContentBlocks blocks={content} />
+            {isArchived ? (
+              <InteractiveContentBlocks blocks={content} onChange={() => {}} />
+            ) : (
+              <InteractiveContentBlocks blocks={content} onChange={setContent} />
+            )}
           </PreviewFrame>
         </div>
 
@@ -178,39 +158,6 @@ export function PageEditor({ documentId }: PageEditorProps) {
               overrides={overrides}
             />
           </div>
-
-          <h2 className={styles.sectionHeading}>Content</h2>
-          <div className={styles.blockList}>
-            {content.map((block, index) => {
-              const control = controls[block.type];
-              if (!control) return null;
-              return (
-                <ContentBlockEditor
-                  key={index}
-                  control={control}
-                  data={block}
-                  index={index}
-                  total={content.length}
-                  onChange={(data) => handleUpdateBlock(index, data)}
-                  onRemove={() => handleRemoveBlock(index)}
-                  onMove={(dir) => handleMoveBlock(index, dir)}
-                />
-              );
-            })}
-          </div>
-          {!isArchived && (
-            <div className={styles.addBar}>
-              {controlList.map((c) => (
-                <button
-                  key={c.type}
-                  className={btn.outline}
-                  onClick={() => handleAddBlock(c.type)}
-                >
-                  + {c.label}
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       </div>
 
