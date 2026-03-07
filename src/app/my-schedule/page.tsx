@@ -22,7 +22,7 @@ function MyScheduleContent() {
     if (!isAuthenticated) return;
 
     Promise.all([
-      getMyBookmarks(identity.id),
+      getMyBookmarks(),
       listDocuments('schedule-slot'),
       listDocuments('talk'),
       listDocuments('speaker'),

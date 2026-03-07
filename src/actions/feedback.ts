@@ -1,19 +1,34 @@
 'use server';
 
+import { cookies } from 'next/headers';
 import { ensureDb } from '@/server/db';
+import { auth } from '@/server/auth';
 import {
   serializeDocuments,
   type SerializedDocument,
 } from '@/lib/serialization';
+import { requireOrganiser } from '@/server/require-organiser';
 import { logger } from '@/server/logger';
+
+async function getToken(): Promise<string | null> {
+  const cookieStore = await cookies();
+  return cookieStore.get('auth-token')?.value ?? null;
+}
+
+async function requireDelegate(): Promise<string> {
+  const token = await getToken();
+  const identity = await auth.resolve(token);
+  if (!identity) throw new Error('Unauthorized');
+  return identity.id;
+}
 
 export async function submitFeedback(
   talkId: string,
-  delegateId: string,
   rating: number,
   comment?: string,
 ): Promise<void> {
   try {
+    const delegateId = await requireDelegate();
     const db = await ensureDb();
     // Check if feedback already exists for this delegate+talk
     const existing = await db.list('feedback', {
@@ -28,7 +43,6 @@ export async function submitFeedback(
     logger.error('Failed to submit feedback', {
       action: 'submitFeedback',
       talkId,
-      delegateId,
       error: err instanceof Error ? err.message : String(err),
     });
     throw err;
@@ -39,6 +53,7 @@ export async function getFeedbackForTalk(
   talkId: string,
 ): Promise<SerializedDocument[]> {
   try {
+    await requireOrganiser(await getToken());
     const db = await ensureDb();
     const docs = await db.list('feedback', { where: { talkId } });
     return serializeDocuments(docs);
@@ -54,9 +69,9 @@ export async function getFeedbackForTalk(
 
 export async function getMyFeedback(
   talkId: string,
-  delegateId: string,
 ): Promise<SerializedDocument | null> {
   try {
+    const delegateId = await requireDelegate();
     const db = await ensureDb();
     const docs = await db.list('feedback', {
       where: { talkId, delegateId },
@@ -73,7 +88,6 @@ export async function getMyFeedback(
     logger.error('Failed to get feedback', {
       action: 'getMyFeedback',
       talkId,
-      delegateId,
       error: err instanceof Error ? err.message : String(err),
     });
     throw err;

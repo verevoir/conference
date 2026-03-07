@@ -1,7 +1,14 @@
 'use server';
 
+import { cookies } from 'next/headers';
 import { getLlmClient } from '@/server/llm';
+import { requireOrganiser } from '@/server/require-organiser';
 import { logger } from '@/server/logger';
+
+async function getToken(): Promise<string | null> {
+  const cookieStore = await cookies();
+  return cookieStore.get('auth-token')?.value ?? null;
+}
 
 interface CopyAssistInput {
   fieldName: string;
@@ -20,6 +27,7 @@ Write for the web — short paragraphs, scannable text, active voice.`;
  * Returns markdown-formatted text.
  */
 export async function generateCopy(input: CopyAssistInput): Promise<string> {
+  await requireOrganiser(await getToken());
   const client = getLlmClient();
   if (!client) {
     throw new Error('LLM not configured (no ANTHROPIC_API_KEY)');

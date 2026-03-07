@@ -15,7 +15,7 @@ export function FeedbackForm({ talkId }: { talkId: string }) {
 
   useEffect(() => {
     if (!isAuthenticated) return;
-    getMyFeedback(talkId, identity.id).then((fb) => {
+    getMyFeedback(talkId).then((fb) => {
       if (fb) {
         setRating((fb.data.rating as number) ?? 0);
         setComment((fb.data.comment as string) ?? '');
@@ -30,7 +30,7 @@ export function FeedbackForm({ talkId }: { talkId: string }) {
 
   const handleSubmit = async () => {
     if (rating < 1 || rating > 5) return;
-    await submitFeedback(talkId, identity.id, rating, comment || undefined);
+    await submitFeedback(talkId, rating, comment || undefined);
     setSubmitted(true);
   };
 

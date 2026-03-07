@@ -15,7 +15,7 @@ export function BookmarkButton({ talkId }: { talkId: string }) {
 
   useEffect(() => {
     if (!isAuthenticated) return;
-    getMyBookmarks(identity.id).then((bms) => {
+    getMyBookmarks().then((bms) => {
       setBookmarked(bms.some((b) => b.data.talkId === talkId));
     });
   }, [isAuthenticated, identity.id, talkId]);
@@ -24,10 +24,10 @@ export function BookmarkButton({ talkId }: { talkId: string }) {
 
   const toggle = async () => {
     if (bookmarked) {
-      await removeBookmark(talkId, identity.id);
+      await removeBookmark(talkId);
       setBookmarked(false);
     } else {
-      await addBookmark(talkId, identity.id);
+      await addBookmark(talkId);
       setBookmarked(true);
     }
   };

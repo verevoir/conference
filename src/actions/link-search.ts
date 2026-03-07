@@ -1,6 +1,13 @@
 'use server';
 
+import { cookies } from 'next/headers';
 import { ensureDb } from '@/server/db';
+import { requireOrganiser } from '@/server/require-organiser';
+
+async function getToken(): Promise<string | null> {
+  const cookieStore = await cookies();
+  return cookieStore.get('auth-token')?.value ?? null;
+}
 
 export interface LinkSearchHit {
   id: string;
@@ -17,6 +24,7 @@ export interface LinkSearchHit {
 export async function searchLinkableDocuments(
   query: string,
 ): Promise<LinkSearchHit[]> {
+  await requireOrganiser(await getToken());
   const q = query.trim();
   if (!q) return [];
 

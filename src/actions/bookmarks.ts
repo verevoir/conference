@@ -1,17 +1,29 @@
 'use server';
 
+import { cookies } from 'next/headers';
 import { ensureDb } from '@/server/db';
+import { auth } from '@/server/auth';
 import {
   serializeDocuments,
   type SerializedDocument,
 } from '@/lib/serialization';
 import { logger } from '@/server/logger';
 
-export async function addBookmark(
-  talkId: string,
-  delegateId: string,
-): Promise<void> {
+async function getToken(): Promise<string | null> {
+  const cookieStore = await cookies();
+  return cookieStore.get('auth-token')?.value ?? null;
+}
+
+async function requireDelegate(): Promise<string> {
+  const token = await getToken();
+  const identity = await auth.resolve(token);
+  if (!identity) throw new Error('Unauthorized');
+  return identity.id;
+}
+
+export async function addBookmark(talkId: string): Promise<void> {
   try {
+    const delegateId = await requireDelegate();
     const db = await ensureDb();
     const existing = await db.list('bookmark', {
       where: { talkId, delegateId },
@@ -23,18 +35,15 @@ export async function addBookmark(
     logger.error('Failed to add bookmark', {
       action: 'addBookmark',
       talkId,
-      delegateId,
       error: err instanceof Error ? err.message : String(err),
     });
     throw err;
   }
 }
 
-export async function removeBookmark(
-  talkId: string,
-  delegateId: string,
-): Promise<void> {
+export async function removeBookmark(talkId: string): Promise<void> {
   try {
+    const delegateId = await requireDelegate();
     const db = await ensureDb();
     const existing = await db.list('bookmark', {
       where: { talkId, delegateId },
@@ -46,24 +55,21 @@ export async function removeBookmark(
     logger.error('Failed to remove bookmark', {
       action: 'removeBookmark',
       talkId,
-      delegateId,
       error: err instanceof Error ? err.message : String(err),
     });
     throw err;
   }
 }
 
-export async function getMyBookmarks(
-  delegateId: string,
-): Promise<SerializedDocument[]> {
+export async function getMyBookmarks(): Promise<SerializedDocument[]> {
   try {
+    const delegateId = await requireDelegate();
     const db = await ensureDb();
     const docs = await db.list('bookmark', { where: { delegateId } });
     return serializeDocuments(docs);
   } catch (err) {
     logger.error('Failed to get bookmarks', {
       action: 'getMyBookmarks',
-      delegateId,
       error: err instanceof Error ? err.message : String(err),
     });
     throw err;

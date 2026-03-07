@@ -1,5 +1,6 @@
 'use server';
 
+import { cookies } from 'next/headers';
 import { getAssetManager } from '@/server/asset-manager';
 import { blobStore } from '@/server/blob-store';
 import {
@@ -7,8 +8,14 @@ import {
   type SerializedDocument,
 } from '@/lib/serialization';
 import { ensureDb } from '@/server/db';
+import { requireOrganiser } from '@/server/require-organiser';
 import { logger } from '@/server/logger';
 import type { ListOptions } from '@verevoir/storage';
+
+async function getToken(): Promise<string | null> {
+  const cookieStore = await cookies();
+  return cookieStore.get('auth-token')?.value ?? null;
+}
 
 export async function listAssets(
   options?: ListOptions,
@@ -27,6 +34,7 @@ export async function listAssets(
 }
 
 export async function uploadAsset(formData: FormData): Promise<string> {
+  await requireOrganiser(await getToken());
   const file = formData.get('file') as File;
   const createdBy = formData.get('createdBy') as string;
   if (!file) throw new Error('No file provided');
@@ -59,6 +67,7 @@ export async function uploadAsset(formData: FormData): Promise<string> {
 
 export async function deleteAsset(id: string): Promise<void> {
   try {
+    await requireOrganiser(await getToken());
     const manager = await getAssetManager();
     await manager.delete(id);
     logger.info('Asset deleted', { action: 'deleteAsset', assetId: id });
@@ -77,6 +86,7 @@ export async function updateAssetHotspot(
   hotspot: { x: number; y: number } | null,
 ): Promise<void> {
   try {
+    await requireOrganiser(await getToken());
     const manager = await getAssetManager();
     await manager.updateMetadata(id, { hotspot });
   } catch (err) {
@@ -94,6 +104,7 @@ export async function updateAssetTags(
   tags: string[],
 ): Promise<void> {
   try {
+    await requireOrganiser(await getToken());
     const manager = await getAssetManager();
     await manager.updateMetadata(id, { tags });
   } catch (err) {
@@ -111,6 +122,7 @@ export async function updateAssetAlt(
   alt: string | null,
 ): Promise<void> {
   try {
+    await requireOrganiser(await getToken());
     const manager = await getAssetManager();
     await manager.updateMetadata(id, { alt });
   } catch (err) {
@@ -128,6 +140,7 @@ export async function updateAssetAttribution(
   attribution: string | null,
 ): Promise<void> {
   try {
+    await requireOrganiser(await getToken());
     const manager = await getAssetManager();
     await manager.updateMetadata(id, { attribution });
   } catch (err) {
