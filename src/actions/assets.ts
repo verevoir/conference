@@ -106,6 +106,23 @@ export async function updateAssetTags(
   }
 }
 
+export async function updateAssetAlt(
+  id: string,
+  alt: string | null,
+): Promise<void> {
+  try {
+    const manager = await getAssetManager();
+    await manager.updateMetadata(id, { alt });
+  } catch (err) {
+    logger.error('Failed to update asset alt', {
+      action: 'updateAssetAlt',
+      assetId: id,
+      error: err instanceof Error ? err.message : String(err),
+    });
+    throw err;
+  }
+}
+
 export async function updateAssetAttribution(
   id: string,
   attribution: string | null,

@@ -47,8 +47,6 @@ export function AuthButton() {
         theme: 'outline',
         size: 'large',
       });
-
-      window.google.accounts.id.prompt();
     }
 
     if (window.google?.accounts?.id) {
@@ -73,7 +71,7 @@ export function AuthButton() {
           <span className={styles.userName}>
             {(identity.metadata?.name as string) || identity.id}
           </span>
-          <button onClick={signOut} className={btn.subtle}>
+          <button onClick={() => { signOut(); window.location.href = '/'; }} className={btn.subtle}>
             Sign out
           </button>
         </div>
@@ -107,6 +105,7 @@ export function AuthButton() {
             window.google?.accounts.id.cancel();
             signOut();
             setGisKey((k) => k + 1);
+            window.location.href = '/';
           }}
           className={btn.subtle}
         >

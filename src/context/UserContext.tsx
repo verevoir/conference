@@ -46,10 +46,22 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     if (!token) return;
     resolveToken(token)
       .then((id) => {
-        if (id) setIdentity(id);
+        if (id) {
+          setIdentity(id);
+        } else {
+          // Token invalid or expired — clear stale session
+          document.cookie =
+            'auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+          setToken(null);
+          setIdentity(ANONYMOUS);
+        }
       })
       .catch(() => {
-        // Auth system unavailable — fall back to anonymous
+        // Auth system unavailable — clear stale session
+        document.cookie =
+          'auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        setToken(null);
+        setIdentity(ANONYMOUS);
       })
       .finally(() => {
         setIsLoading(false);

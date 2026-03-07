@@ -8,6 +8,7 @@ import {
   deleteAsset,
   updateAssetTags,
   updateAssetAttribution,
+  updateAssetAlt,
 } from '@/actions/assets';
 import type { SerializedDocument } from '@/lib/serialization';
 import btn from '@/styles/Button.module.css';
@@ -98,6 +99,14 @@ export function AssetBrowser() {
     refresh();
   };
 
+  const handleEditAlt = async (asset: SerializedDocument) => {
+    const current = (asset.data.alt as string) || '';
+    const value = prompt('Alt text:', current);
+    if (value === null) return;
+    await updateAssetAlt(asset.id, value || null);
+    refresh();
+  };
+
   const handleEditAttribution = async (asset: SerializedDocument) => {
     const current = (asset.data.attribution as string) || '';
     const value = prompt('Attribution (credit / copyright):', current);
@@ -182,7 +191,7 @@ export function AssetBrowser() {
                 {a.data.type === 'image' ? (
                   <img
                     src={blobUrl(a)}
-                    alt={String(a.data.filename)}
+                    alt={String(a.data.alt || a.data.filename)}
                     className={styles.thumbnail}
                     loading="lazy"
                   />
@@ -205,6 +214,15 @@ export function AssetBrowser() {
                     ? ` \u00b7 ${a.data.width}\u00d7${a.data.height}`
                     : ''}
                 </span>
+                {can('update') && (
+                  <button
+                    className={styles.attribution}
+                    onClick={() => handleEditAlt(a)}
+                    title="Edit alt text"
+                  >
+                    {a.data.alt ? String(a.data.alt) : '+ alt text'}
+                  </button>
+                )}
                 {can('update') && (
                   <button
                     className={styles.attribution}
