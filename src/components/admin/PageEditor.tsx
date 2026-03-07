@@ -67,7 +67,6 @@ export function PageEditor({ documentId }: PageEditorProps) {
 
   const isNew = !documentId;
   const status = (state.value.status as string) || 'draft';
-  const version = (state.value.version as number) || 1;
   const canSave = isNew ? can('create') : can('update', { ownerId: createdBy });
 
   const handleSave = async () => {
@@ -121,7 +120,7 @@ export function PageEditor({ documentId }: PageEditorProps) {
         <h1>{isNew ? 'New Page' : 'Edit Page'}</h1>
         {!isNew && (
           <span className={`${styles.badge} ${styles[`badge_${status}`]}`}>
-            v{version} &middot; {status}
+            {status}
           </span>
         )}
       </div>
@@ -174,22 +173,54 @@ export function PageEditor({ documentId }: PageEditorProps) {
                 className={`${styles.versionRow} ${v.id === documentId ? styles.versionActive : ''}`}
               >
                 <span>
-                  v{String(v.data.version)} &middot;{' '}
                   <span
                     className={`${styles.badge} ${styles[`badge_${v.data.status}`]}`}
                   >
                     {String(v.data.status)}
                   </span>
                   &nbsp;&middot; {new Date(v.updatedAt).toLocaleDateString()}
+                  {typeof v.data.publishFrom === 'string' &&
+                    v.data.publishFrom && (
+                      <>
+                        {' '}
+                        &middot; from{' '}
+                        {new Date(v.data.publishFrom).toLocaleDateString()}
+                      </>
+                    )}
+                  {typeof v.data.publishTo === 'string' && v.data.publishTo && (
+                    <>
+                      {' '}
+                      &middot; until{' '}
+                      {new Date(v.data.publishTo).toLocaleDateString()}
+                    </>
+                  )}
                 </span>
-                {v.id !== documentId && (
-                  <a
-                    href={`/admin/pages/${v.id}`}
-                    className={styles.versionLink}
-                  >
-                    View
-                  </a>
-                )}
+                <span>
+                  {v.id !== documentId && (
+                    <a
+                      href={`/admin/pages/${v.id}`}
+                      className={styles.versionLink}
+                    >
+                      Edit
+                    </a>
+                  )}
+                  {v.id !== documentId && (
+                    <button
+                      className={styles.versionLink}
+                      onClick={async () => {
+                        const newDoc = await createNewVersion(v.id);
+                        router.push(`/admin/pages/${newDoc.id}`);
+                      }}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Duplicate
+                    </button>
+                  )}
+                </span>
               </div>
             ))}
           </div>

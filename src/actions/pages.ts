@@ -16,7 +16,10 @@ async function getToken(): Promise<string | null> {
 }
 
 /** Publish a draft page version. Archives the current published version (if any) for that slug. */
-export async function publishPage(id: string): Promise<SerializedDocument> {
+export async function publishPage(
+  id: string,
+  options?: { publishFrom?: string; publishTo?: string },
+): Promise<SerializedDocument> {
   await requireOrganiser(await getToken());
   const db = await ensureDb();
 
@@ -33,13 +36,20 @@ export async function publishPage(id: string): Promise<SerializedDocument> {
     }
   }
 
-  // Publish this version
-  const updated = await db.update(id, { ...doc.data, status: 'published' });
+  // Publish this version with optional time window
+  const updated = await db.update(id, {
+    ...doc.data,
+    status: 'published',
+    publishFrom: options?.publishFrom ?? doc.data.publishFrom,
+    publishTo: options?.publishTo ?? doc.data.publishTo,
+  });
   logger.info('Page published', {
     action: 'publishPage',
     documentId: id,
     slug,
     version: doc.data.version,
+    publishFrom: options?.publishFrom,
+    publishTo: options?.publishTo,
   });
   return serializeDocument(updated);
 }
@@ -81,6 +91,8 @@ export async function createNewVersion(
   const newDoc = await db.create('page', {
     ...source.data,
     status: 'draft',
+    publishFrom: undefined,
+    publishTo: undefined,
     version: maxVersion + 1,
   });
 

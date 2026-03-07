@@ -22,3 +22,8 @@
 .actionLink {
   font-size: var(--text-sm);
 }
+
+.versionCount {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}

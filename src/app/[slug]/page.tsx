@@ -4,6 +4,7 @@ import { use, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { PublicShell } from '@/components/public/PublicShell';
 import { ContentBlocks } from '@/components/public/ContentBlocks';
+import { isLive } from '@verevoir/editor';
 import { listDocuments, getDocument } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
 import type { ContentBlock } from '@/controls';
@@ -32,11 +33,11 @@ export default function StaticPage({
         }
       });
     } else {
-      // Public mode: only serve the published version
+      // Public mode: only serve a live version (published + within time window)
       listDocuments('page', { where: { slug } }).then((docs) => {
-        const published = docs.find((d) => d.data.status === 'published');
-        if (published) {
-          setPage(published);
+        const live = docs.find((d) => isLive(d.data));
+        if (live) {
+          setPage(live);
         } else {
           setNotFound(true);
         }
@@ -79,8 +80,7 @@ export default function StaticPage({
             fontWeight: 600,
           }}
         >
-          Preview — v{String(page.data.version || 1)} (
-          {String(page.data.status || 'draft')})
+          Preview — {String(page.data.status || 'draft')}
         </div>
       )}
       <h1>{String(page.data.title)}</h1>

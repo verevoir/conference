@@ -69,7 +69,7 @@ export default function PagesPage() {
                 <th className={table.th}>Title</th>
                 <th className={table.th}>Slug</th>
                 <th className={table.th}>Status</th>
-                <th className={table.th}>Versions</th>
+                <th className={table.th}>Updated</th>
                 <th className={table.th}>Actions</th>
               </tr>
             </thead>
@@ -89,14 +89,22 @@ export default function PagesPage() {
                       </span>
                     )}
                   </td>
-                  <td className={table.td}>{g.versions.length}</td>
+                  <td className={table.td}>
+                    {new Date(g.latest.updatedAt).toLocaleDateString()}
+                  </td>
                   <td className={table.td}>
                     <Link
                       href={`/admin/pages/${g.latest.id}`}
                       className={styles.actionLink}
                     >
-                      Edit latest (v{String(g.latest.data.version || 1)})
+                      Edit
                     </Link>
+                    {g.versions.length > 1 && (
+                      <span className={styles.versionCount}>
+                        {' '}
+                        ({g.versions.length} versions)
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
