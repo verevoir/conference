@@ -7,6 +7,7 @@ import { BookmarkButton } from '@/components/public/BookmarkButton';
 import { FeedbackForm } from '@/components/public/FeedbackForm';
 import { getDocument, listDocuments } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
+import { markdownToHtml } from '@verevoir/editor';
 import styles from './page.module.css';
 
 export default function TalkDetailPage({
@@ -84,7 +85,10 @@ export default function TalkDetailPage({
         </p>
       )}
       {abstract ? (
-        <div className={styles.abstract}>{String(abstract)}</div>
+        <div
+          className={styles.abstract}
+          dangerouslySetInnerHTML={{ __html: markdownToHtml(String(abstract)) }}
+        />
       ) : null}
 
       {feedbackOpen && <FeedbackForm talkId={id} />}

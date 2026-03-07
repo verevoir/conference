@@ -6,6 +6,7 @@ import { PublicShell } from '@/components/public/PublicShell';
 import { TalkCard } from '@/components/public/TalkCard';
 import { getDocument, listDocuments } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
+import { markdownToHtml } from '@verevoir/editor';
 import styles from './page.module.css';
 
 export default function SpeakerDetailPage({
@@ -54,7 +55,12 @@ export default function SpeakerDetailPage({
           {company ? ` at ${company}` : ''}
         </p>
       )}
-      {bio && <div className={styles.bio}>{bio}</div>}
+      {bio && (
+        <div
+          className={styles.bio}
+          dangerouslySetInnerHTML={{ __html: markdownToHtml(String(bio)) }}
+        />
+      )}
       {website && (
         <p>
           <a href={website} target="_blank" rel="noopener noreferrer">

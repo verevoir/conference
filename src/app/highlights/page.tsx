@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { PublicShell } from '@/components/public/PublicShell';
 import { listDocuments } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
+import { markdownToHtml } from '@verevoir/editor';
 import styles from './page.module.css';
 
 export default function HighlightsPage() {
@@ -26,7 +27,12 @@ export default function HighlightsPage() {
               {h.data.year ? (
                 <span className={styles.yearBadge}>{String(h.data.year)}</span>
               ) : null}
-              <p className={styles.description}>{String(h.data.description)}</p>
+              <div
+                className={styles.description}
+                dangerouslySetInnerHTML={{
+                  __html: markdownToHtml(String(h.data.description)),
+                }}
+              />
               {h.data.stat ? (
                 <p className={styles.stat}>{String(h.data.stat)}</p>
               ) : null}

@@ -1,4 +1,5 @@
 import { defineBlock, richText, text } from '@verevoir/schema';
+import { markdownToHtml } from '@verevoir/editor';
 import type { ContentControl } from './types';
 
 const block = defineBlock({
@@ -12,7 +13,7 @@ const block = defineBlock({
 function Renderer({ data }: { data: { body: string; attribution?: string } }) {
   return (
     <blockquote>
-      <p>{data.body}</p>
+      <div dangerouslySetInnerHTML={{ __html: markdownToHtml(data.body) }} />
       {data.attribution && <cite>{data.attribution}</cite>}
     </blockquote>
   );

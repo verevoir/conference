@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { PublicShell } from '@/components/public/PublicShell';
 import { listDocuments, getDocument } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
+import { markdownToHtml } from '@verevoir/editor';
 import styles from './page.module.css';
 
 export default function BlogPostPage({
@@ -48,7 +49,12 @@ export default function BlogPostPage({
         {new Date(post.updatedAt).toLocaleDateString()}
         {author && ` \u2022 ${String(author.data.name)}`}
       </p>
-      <div className={styles.body}>{String(post.data.body)}</div>
+      <div
+        className={styles.body}
+        dangerouslySetInnerHTML={{
+          __html: markdownToHtml(String(post.data.body)),
+        }}
+      />
     </PublicShell>
   );
 }
