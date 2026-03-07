@@ -71,7 +71,13 @@ export function AuthButton() {
           <span className={styles.userName}>
             {(identity.metadata?.name as string) || identity.id}
           </span>
-          <button onClick={() => { signOut(); window.location.href = '/'; }} className={btn.subtle}>
+          <button
+            onClick={() => {
+              signOut();
+              window.location.href = '/';
+            }}
+            className={btn.subtle}
+          >
             Sign out
           </button>
         </div>

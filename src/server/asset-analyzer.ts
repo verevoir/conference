@@ -1,4 +1,8 @@
-import type { AssetAnalyzer, AnalyzerInput, AnalyzerResult } from '@verevoir/assets';
+import type {
+  AssetAnalyzer,
+  AnalyzerInput,
+  AnalyzerResult,
+} from '@verevoir/assets';
 import type Anthropic from '@anthropic-ai/sdk';
 import { logger } from './logger';
 
@@ -51,8 +55,7 @@ Return ONLY the JSON object, no other text.`,
       } catch (apiErr) {
         logger.error('Asset analyzer API call failed', {
           filename: input.filename,
-          error:
-            apiErr instanceof Error ? apiErr.message : String(apiErr),
+          error: apiErr instanceof Error ? apiErr.message : String(apiErr),
           stack: apiErr instanceof Error ? apiErr.stack : undefined,
         });
         throw apiErr;
@@ -61,7 +64,9 @@ Return ONLY the JSON object, no other text.`,
       const raw =
         response.content[0].type === 'text' ? response.content[0].text : '';
       // Strip markdown code fences if present
-      const text = raw.replace(/^```(?:json)?\s*\n?/i, '').replace(/\n?```\s*$/i, '');
+      const text = raw
+        .replace(/^```(?:json)?\s*\n?/i, '')
+        .replace(/\n?```\s*$/i, '');
 
       let parsed: { alt?: unknown; tags?: unknown };
       try {
