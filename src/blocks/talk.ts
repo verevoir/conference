@@ -11,7 +11,9 @@ export const talk = defineBlock({
   name: 'talk',
   fields: {
     title: text('Title').max(200),
-    abstract: richText('Abstract'),
+    abstract: richText('Abstract').hint(
+      'Technical summary for conference delegates. Highlight key takeaways and what attendees will learn. 2-3 paragraphs.',
+    ),
     speakerId: reference('Speaker', 'speaker'),
     trackId: reference('Track', 'track'),
     duration: number('Duration (mins)').int().min(5).max(120),

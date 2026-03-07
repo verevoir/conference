@@ -4,7 +4,11 @@ export const speaker = defineBlock({
   name: 'speaker',
   fields: {
     name: text('Name').max(100),
-    bio: richText('Bio').optional(),
+    bio: richText('Bio')
+      .hint(
+        'Third person, 2-3 sentences. Mention role, expertise, and one notable achievement.',
+      )
+      .optional(),
     email: text('Email').regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
     company: text('Company').optional(),
     jobTitle: text('Job Title').optional(),
