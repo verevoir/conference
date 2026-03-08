@@ -236,7 +236,7 @@ export function PageEditor({ documentId }: PageEditorProps) {
         </button>
         {String(state.value.slug || '') && (
           <a
-            href={`/${String(state.value.slug)}?preview=${documentId}`}
+            href={`${String(state.value.slug) === '/' ? '/' : `/${String(state.value.slug)}`}?preview=${documentId}`}
             target="_blank"
             rel="noopener noreferrer"
             className={btn.outline}

@@ -11,7 +11,7 @@ export async function getRoleStore() {
     roleStore = createRoleStore({
       storage,
       seedAdmin: {
-        userId: process.env.SEED_ADMIN_ID ?? 'google-114823947',
+        userId: process.env.SEED_ADMIN_ID!,
         roles: ['organiser'],
       },
     });
