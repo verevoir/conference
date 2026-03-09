@@ -1,4 +1,4 @@
-FROM node:22-alpine AS builder
+FROM node:22-alpine3.23 AS builder
 WORKDIR /app
 ARG NEXT_PUBLIC_GOOGLE_CLIENT_ID
 ENV NEXT_PUBLIC_GOOGLE_CLIENT_ID=$NEXT_PUBLIC_GOOGLE_CLIENT_ID
@@ -7,7 +7,7 @@ RUN npm ci
 COPY . .
 RUN NEXT_PRIVATE_WORKER_THREADS=0 npm run build
 
-FROM node:22-alpine AS runner
+FROM node:22-alpine3.23 AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs
