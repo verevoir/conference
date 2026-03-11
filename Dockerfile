@@ -2,7 +2,7 @@ FROM node:22-alpine3.23 AS builder
 WORKDIR /app
 ARG NEXT_PUBLIC_GOOGLE_CLIENT_ID
 ENV NEXT_PUBLIC_GOOGLE_CLIENT_ID=$NEXT_PUBLIC_GOOGLE_CLIENT_ID
-COPY package.json package-lock.json ./
+COPY editor-premium.tgz package.json package-lock.json ./
 RUN npm ci
 COPY . .
 RUN NEXT_PRIVATE_WORKER_THREADS=0 npm run build

@@ -18,7 +18,7 @@
     "@verevoir/access": "0.2.0-beta.1",
     "@verevoir/assets": "0.5.0-beta.1",
     "@verevoir/editor": "0.3.5-beta.1",
-    "@verevoir/editor-premium": "file:../editor-premium",
+    "@verevoir/editor-premium": "file:editor-premium.tgz",
     "@verevoir/media": "0.2.0-beta.1",
     "@verevoir/bookings": "0.1.1-alpha.1",
     "@verevoir/commerce": "0.1.1-alpha.1",

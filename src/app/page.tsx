@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { PublicShell } from '@/components/public/PublicShell';
 import { ContentBlocks } from '@/components/public/ContentBlocks';
@@ -9,7 +9,7 @@ import { listDocuments, getDocument } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
 import type { ContentBlock } from '@/controls';
 
-export default function HomePage() {
+function HomeContent() {
   const searchParams = useSearchParams();
   const previewId = searchParams.get('preview');
   const [page, setPage] = useState<SerializedDocument | null>(null);
@@ -78,5 +78,19 @@ export default function HomePage() {
       <h1>{String(page.data.title)}</h1>
       <ContentBlocks blocks={content} />
     </PublicShell>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense
+      fallback={
+        <PublicShell>
+          <p>Loading...</p>
+        </PublicShell>
+      }
+    >
+      <HomeContent />
+    </Suspense>
   );
 }

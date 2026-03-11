@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useEffect, useState } from 'react';
+import { Suspense, use, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { PublicShell } from '@/components/public/PublicShell';
 import { ContentBlocks } from '@/components/public/ContentBlocks';
@@ -9,12 +9,7 @@ import { listDocuments, getDocument } from '@/actions/documents';
 import type { SerializedDocument } from '@/lib/serialization';
 import type { ContentBlock } from '@/controls';
 
-export default function StaticPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = use(params);
+function PageContent({ slug }: { slug: string }) {
   const searchParams = useSearchParams();
   const previewId = searchParams.get('preview');
   const [page, setPage] = useState<SerializedDocument | null>(null);
@@ -23,7 +18,6 @@ export default function StaticPage({
 
   useEffect(() => {
     if (previewId) {
-      // Preview mode: load specific document version by ID
       getDocument(previewId).then((doc) => {
         if (doc) {
           setPage(doc);
@@ -33,7 +27,6 @@ export default function StaticPage({
         }
       });
     } else {
-      // Public mode: only serve a live version (published + within time window)
       listDocuments('page', { where: { slug } }).then((docs) => {
         const live = docs.find((d) => isLive(d.data));
         if (live) {
@@ -86,5 +79,24 @@ export default function StaticPage({
       <h1>{String(page.data.title)}</h1>
       <ContentBlocks blocks={content} />
     </PublicShell>
+  );
+}
+
+export default function StaticPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = use(params);
+  return (
+    <Suspense
+      fallback={
+        <PublicShell>
+          <p>Loading...</p>
+        </PublicShell>
+      }
+    >
+      <PageContent slug={slug} />
+    </Suspense>
   );
 }
