@@ -10,6 +10,12 @@ import { highlight } from './highlight';
 import { feedback } from './feedback';
 import { bookmark } from './bookmark';
 import { config } from './config';
+import { talkProposal } from './talk-proposal';
+import { vote } from './vote';
+import { ticketBatch } from './ticket-batch';
+import { ticketBooking } from './ticket-booking';
+import { swagProduct } from './swag-product';
+import { swagOrder } from './swag-order';
 
 export {
   talk,
@@ -24,6 +30,12 @@ export {
   feedback,
   bookmark,
   config,
+  talkProposal,
+  vote,
+  ticketBatch,
+  ticketBooking,
+  swagProduct,
+  swagOrder,
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,4 +52,10 @@ export const blocks: Record<string, any> = {
   feedback,
   bookmark,
   config,
+  'talk-proposal': talkProposal,
+  vote,
+  'ticket-batch': ticketBatch,
+  'ticket-booking': ticketBooking,
+  'swag-product': swagProduct,
+  'swag-order': swagOrder,
 };

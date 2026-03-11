@@ -17,6 +17,7 @@ import {
   listDocuments,
 } from '@/actions/documents';
 import { TalkStatusField, BlogStatusField } from './StatusField';
+import { ProposalStatusField } from './ProposalStatusField';
 import btn from '@/styles/Button.module.css';
 import form from '@/styles/Form.module.css';
 import editorForm from '@/styles/EditorForm.module.css';
@@ -30,10 +31,12 @@ interface DocumentEditorProps {
 
 const talkOverrides: FieldOverrides = { status: TalkStatusField };
 const postOverrides: FieldOverrides = { status: BlogStatusField };
+const proposalOverrides: FieldOverrides = { status: ProposalStatusField };
 
 function getOverrides(blockType: string): FieldOverrides | undefined {
   if (blockType === 'talk') return talkOverrides;
   if (blockType === 'post') return postOverrides;
+  if (blockType === 'talk-proposal') return proposalOverrides;
   return undefined;
 }
 

@@ -15,6 +15,8 @@ import {
   talkPublishing,
   blogPublishing,
   pagePublishing,
+  conferenceLifecycle,
+  proposalWorkflow,
 } from '@/access/workflow';
 
 interface UserContextValue {
@@ -27,6 +29,8 @@ interface UserContextValue {
   talkWorkflow: typeof talkPublishing;
   blogWorkflow: typeof blogPublishing;
   pageWorkflow: typeof pagePublishing;
+  lifecycleWorkflow: typeof conferenceLifecycle;
+  proposalWorkflow: typeof proposalWorkflow;
 }
 
 const UserContext = createContext<UserContextValue | null>(null);
@@ -98,6 +102,8 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         talkWorkflow: talkPublishing,
         blogWorkflow: blogPublishing,
         pageWorkflow: pagePublishing,
+        lifecycleWorkflow: conferenceLifecycle,
+        proposalWorkflow: proposalWorkflow,
       }}
     >
       {children}

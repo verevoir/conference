@@ -8,6 +8,7 @@ import {
   type SerializedDocument,
 } from '@/lib/serialization';
 import { requireOrganiser } from '@/server/require-organiser';
+import { getPhase } from '@/server/phase';
 import { logger } from '@/server/logger';
 
 async function getToken(): Promise<string | null> {
@@ -28,6 +29,10 @@ export async function submitFeedback(
   comment?: string,
 ): Promise<void> {
   try {
+    const phase = await getPhase();
+    if (phase !== 'live') {
+      throw new Error('Feedback is only available during the live phase');
+    }
     const delegateId = await requireDelegate();
     const db = await ensureDb();
     // Check if feedback already exists for this delegate+talk

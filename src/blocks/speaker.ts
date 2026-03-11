@@ -1,4 +1,10 @@
-import { defineBlock, text, richText, reference } from '@verevoir/schema';
+import {
+  defineBlock,
+  text,
+  richText,
+  reference,
+  boolean,
+} from '@verevoir/schema';
 
 export const speaker = defineBlock({
   name: 'speaker',
@@ -14,5 +20,7 @@ export const speaker = defineBlock({
     jobTitle: text('Job Title').optional(),
     photoId: reference('Photo', 'asset'),
     website: text('Website').optional(),
+    selfRegistered: boolean('Self-Registered').default(false),
+    createdBy: text('Created By').optional(),
   },
 });

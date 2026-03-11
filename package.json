@@ -20,6 +20,8 @@
     "@verevoir/editor": "0.3.5-beta.1",
     "@verevoir/editor-premium": "file:../editor-premium",
     "@verevoir/media": "0.2.0-beta.1",
+    "@verevoir/bookings": "0.1.1-alpha.1",
+    "@verevoir/commerce": "0.1.1-alpha.1",
     "@verevoir/schema": "0.3.1-beta.1",
     "@verevoir/storage": "0.3.0-beta.1",
     "next": "^16.1.6",

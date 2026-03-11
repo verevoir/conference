@@ -12,6 +12,22 @@ const testAccounts: TestAccount[] = [
     },
   },
   {
+    token: 'presenter-1-token',
+    identity: {
+      id: 'google-447293816',
+      roles: ['presenter'],
+      metadata: { email: 'presenter1@example.com', name: 'Dave Presenter' },
+    },
+  },
+  {
+    token: 'presenter-2-token',
+    identity: {
+      id: 'google-558374920',
+      roles: ['presenter'],
+      metadata: { email: 'presenter2@example.com', name: 'Eve Presenter' },
+    },
+  },
+  {
     token: 'delegate-1-token',
     identity: {
       id: 'google-229384756',

@@ -6,6 +6,8 @@ import Link from 'next/link';
 import styles from './page.module.css';
 
 const sections = [
+  { type: 'talk-proposal', label: 'Proposals', href: '/admin/proposals' },
+  { type: 'vote', label: 'Votes', href: '/admin/votes' },
   { type: 'talk', label: 'Talks', href: '/admin/talks' },
   { type: 'speaker', label: 'Speakers', href: '/admin/speakers' },
   { type: 'track', label: 'Tracks', href: '/admin/tracks' },

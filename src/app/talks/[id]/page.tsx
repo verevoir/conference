@@ -33,7 +33,7 @@ export default function TalkDetailPage({
     });
     listDocuments('config').then((docs) => {
       if (docs.length > 0) {
-        setFeedbackOpen(docs[0].data.feedbackOpen === true);
+        setFeedbackOpen(docs[0].data.phase === 'live');
       }
     });
   }, [id]);

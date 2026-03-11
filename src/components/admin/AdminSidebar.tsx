@@ -9,6 +9,11 @@ import styles from './AdminSidebar.module.css';
 
 const navItems = [
   { href: '/admin', label: 'Dashboard' },
+  { href: '/admin/phase', label: 'Lifecycle' },
+  { href: '/admin/proposals', label: 'Proposals' },
+  { href: '/admin/votes', label: 'Votes' },
+  { href: '/admin/registration', label: 'Registration' },
+  { href: '/admin/shop', label: 'Shop' },
   { href: '/admin/talks', label: 'Talks' },
   { href: '/admin/speakers', label: 'Speakers' },
   { href: '/admin/tracks', label: 'Tracks' },

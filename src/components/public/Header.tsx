@@ -6,6 +6,10 @@ import { AuthButton } from '@/components/admin/AuthButton';
 import styles from './Header.module.css';
 
 const navLinks = [
+  { href: '/cfp', label: 'CFP' },
+  { href: '/vote', label: 'Vote' },
+  { href: '/register', label: 'Register' },
+  { href: '/shop', label: 'Shop' },
   { href: '/schedule', label: 'Schedule' },
   { href: '/speakers', label: 'Speakers' },
   { href: '/sponsors', label: 'Sponsors' },

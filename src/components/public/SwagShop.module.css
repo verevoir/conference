@@ -1,0 +1,67 @@
+.container {
+  max-width: 720px;
+}
+
+.message {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  background: #dbeafe;
+  color: #1e40af;
+  margin-bottom: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  padding: 1rem;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 8px;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.description {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.price {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cartBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.orders {
+  margin-top: 2rem;
+  border-top: 1px solid var(--color-border, #e5e7eb);
+  padding-top: 1rem;
+}
+
+.orderCard {
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #374151;
+}

@@ -1,3 +1,72 @@
 .empty {
   color: var(--color-text-muted);
 }
+
+.intro {
+  max-width: 640px;
+  margin-bottom: var(--space-xl);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.tiersSection {
+  margin-top: var(--space-xxl, 3rem);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-xl);
+}
+
+.tiersHeading {
+  margin-bottom: var(--space-lg);
+}
+
+.tierCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.tierCard {
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.tierCard h3 {
+  margin-top: 0;
+  text-transform: capitalize;
+}
+
+.tierPerks {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-sm) 0;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.tierPerks li {
+  padding: 0.25rem 0;
+}
+
+.tierPerks li::before {
+  content: '\2713  ';
+  color: var(--color-primary, #3b82f6);
+}
+
+.cta {
+  max-width: 640px;
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
+  background: var(--color-surface, #f9fafb);
+  border-radius: var(--radius-md);
+  line-height: 1.6;
+}
+
+.cta p {
+  margin: 0 0 var(--space-sm);
+}
+
+.ctaEmail {
+  font-weight: 600;
+}
