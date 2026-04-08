@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.env
+.env.local
+dist/
+*.tsbuildinfo
+.git/
+infra/
+docs/
+
+# Do NOT ignore editor-premium.tgz — needed for Docker build
