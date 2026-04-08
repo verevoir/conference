@@ -46,14 +46,15 @@ describe('resolveToken', () => {
     expect(result).toBeNull();
   });
 
-  it('re-throws when auth.resolve throws (infra error)', async () => {
+  it('returns null when auth.resolve throws (infra error)', async () => {
     mockResolve.mockRejectedValue(new Error('ECONNREFUSED'));
-    await expect(resolveToken('any-token')).rejects.toThrow('ECONNREFUSED');
+    const result = await resolveToken('any-token');
+    expect(result).toBeNull();
   });
 
-  it('logs the error before re-throwing', async () => {
+  it('logs the error when auth.resolve throws', async () => {
     mockResolve.mockRejectedValue(new Error('ECONNREFUSED'));
-    await expect(resolveToken('any-token')).rejects.toThrow();
+    await resolveToken('any-token');
     expect(mockLogError).toHaveBeenCalledWith(
       'Failed to resolve auth token',
       expect.objectContaining({

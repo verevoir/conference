@@ -13,6 +13,7 @@ describe('getRoleStore', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.resetModules();
+    process.env.SEED_ADMIN_ID = 'google-114823947';
     memoryAdapter = new MemoryAdapter();
     mockEnsureDb.mockResolvedValue(memoryAdapter);
   });
