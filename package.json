@@ -10,11 +10,11 @@
     "lint": "eslint . && prettier --check ."
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.78.0",
+    "@anthropic-ai/sdk": "^0.106.0",
     "@google-cloud/opentelemetry-cloud-trace-exporter": "^3.0.0",
-    "@google-cloud/storage": "^7.19.0",
-    "@opentelemetry/auto-instrumentations-node": "^0.71.0",
-    "@opentelemetry/sdk-node": "^0.213.0",
+    "@google-cloud/storage": "^7.21.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.77.0",
+    "@opentelemetry/sdk-node": "^0.219.0",
     "@verevoir/access": "^1.0.0",
     "@verevoir/assets": "^1.0.0",
     "@verevoir/editor": "^1.0.0",
@@ -24,26 +24,26 @@
     "@verevoir/commerce": "^1.0.0",
     "@verevoir/schema": "^1.0.0",
     "@verevoir/storage": "^1.0.0",
-    "next": "^16.1.6",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "zod": "^3.25.76"
+    "next": "^16.2.9",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "zod": "^4.4.3"
   },
   "overrides": {
     "http-proxy-agent": "^7.0.0",
     "@tootallnate/once": "^3.0.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.4",
-    "@types/node": "^25.3.5",
-    "@types/react": "^19.2.14",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.0.1",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.4",
+    "eslint": "^10.5.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "prettier": "^3.8.1",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.1",
-    "vitest": "^4.0.18"
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "prettier": "^3.8.4",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.62.0",
+    "vitest": "^4.1.9"
   }
 }
