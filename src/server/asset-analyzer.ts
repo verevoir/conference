@@ -33,10 +33,7 @@ export function createAssetAnalyzer(client: Anthropic): AssetAnalyzer {
                   source: {
                     type: 'base64',
                     media_type: input.contentType as
-                      | 'image/jpeg'
-                      | 'image/png'
-                      | 'image/gif'
-                      | 'image/webp',
+                      'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp',
                     data: Buffer.from(input.data).toString('base64'),
                   },
                 },

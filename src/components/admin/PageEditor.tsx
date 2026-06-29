@@ -35,7 +35,7 @@ const overrides: FieldOverrides = { status: PageStatusField };
 
 export function PageEditor({ documentId }: PageEditorProps) {
   const router = useRouter();
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(!documentId);
   const [state, actions] = useBlockForm(pageBlock, {});
   const [content, setContent] = useState<ContentBlock[]>([]);
   const [createdBy, setCreatedBy] = useState<string | undefined>(undefined);
@@ -59,8 +59,6 @@ export function PageEditor({ documentId }: PageEditorProps) {
         }
         setLoaded(true);
       });
-    } else {
-      setLoaded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documentId]);

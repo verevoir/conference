@@ -47,7 +47,7 @@ export function DocumentEditor({
 }: DocumentEditorProps) {
   const router = useRouter();
   const block = blocks[blockType];
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(!documentId);
   const [state, actions] = useBlockForm(block, {});
   const [refOptions, setRefOptions] = useState<ReferenceOptionsMap>({});
   const [createdBy, setCreatedBy] = useState<string | undefined>(undefined);
@@ -93,8 +93,6 @@ export function DocumentEditor({
         }
         setLoaded(true);
       });
-    } else {
-      setLoaded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documentId]);
