@@ -8,13 +8,11 @@ editor-premium.tgz
 
 # Terraform
 infra/.terraform/
-infra/*.tfstate
-infra/*.tfstate.backup
+infra/*.tfstate*
 infra/.terraform.lock.hcl
 infra/terraform.tfvars
 project-infra/.terraform/
-project-infra/*.tfstate
-project-infra/*.tfstate.backup
+project-infra/*.tfstate*
 project-infra/.terraform.lock.hcl
 project-infra/terraform.tfvars
 .DS_Store
