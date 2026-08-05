@@ -17,3 +17,4 @@ project-infra/*.tfstate
 project-infra/*.tfstate.backup
 project-infra/.terraform.lock.hcl
 project-infra/terraform.tfvars
+.DS_Store
