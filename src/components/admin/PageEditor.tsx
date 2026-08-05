@@ -43,23 +43,34 @@ export function PageEditor({ documentId }: PageEditorProps) {
   const { identity, can } = useUser();
 
   useEffect(() => {
-    if (documentId) {
-      getDocument(documentId).then((doc) => {
-        if (doc) {
-          setCreatedBy(doc.data.createdBy as string | undefined);
-          actions.onChange(doc.data);
-          setContent(
-            Array.isArray(doc.data.content)
-              ? (doc.data.content as ContentBlock[])
-              : [],
-          );
-          if (doc.data.slug) {
-            listPageVersions(String(doc.data.slug)).then(setVersions);
-          }
+    if (!documentId) return;
+    // `cancelled` guards against a fast document switch applying the
+    // previous document's data after this effect has been superseded.
+    let cancelled = false;
+
+    void (async () => {
+      const doc = await getDocument(documentId);
+      if (cancelled) return;
+      if (doc) {
+        setCreatedBy(doc.data.createdBy as string | undefined);
+        actions.onChange(doc.data);
+        setContent(
+          Array.isArray(doc.data.content)
+            ? (doc.data.content as ContentBlock[])
+            : [],
+        );
+        if (doc.data.slug) {
+          const pageVersions = await listPageVersions(String(doc.data.slug));
+          if (cancelled) return;
+          setVersions(pageVersions);
         }
-        setLoaded(true);
-      });
-    }
+      }
+      setLoaded(true);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documentId]);
 

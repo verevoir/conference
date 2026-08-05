@@ -85,15 +85,24 @@ export function DocumentEditor({
   }, []);
 
   useEffect(() => {
-    if (documentId) {
-      getDocument(documentId).then((doc) => {
-        if (doc) {
-          setCreatedBy(doc.data.createdBy as string | undefined);
-          actions.onChange(doc.data);
-        }
-        setLoaded(true);
-      });
-    }
+    if (!documentId) return;
+    // `cancelled` guards against a fast document switch applying the
+    // previous document's data after this effect has been superseded.
+    let cancelled = false;
+
+    void (async () => {
+      const doc = await getDocument(documentId);
+      if (cancelled) return;
+      if (doc) {
+        setCreatedBy(doc.data.createdBy as string | undefined);
+        actions.onChange(doc.data);
+      }
+      setLoaded(true);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documentId]);
 
