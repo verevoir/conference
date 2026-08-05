@@ -17,16 +17,27 @@ describe('test auth adapter', () => {
     expect(identity!.id).toBe('google-229384756');
   });
 
-  it('returns ANONYMOUS for null token', async () => {
-    const identity = await auth.resolve(null);
-    expect(identity).not.toBeNull();
-    expect(isAnonymous(identity!)).toBe(true);
+  // access 2.0.0 changed the test adapter's default for unknown tokens from
+  // 'anonymous' to 'null', so it matches the Google / Apple / OIDC adapters:
+  // an invalid token is an invalid token. The old default made it easy to
+  // leave a route anonymously accessible if AUTH_MODE=test ever reached a
+  // non-local environment.
+  //
+  // Nothing downstream regressed: UserContext falls back to ANONYMOUS when it
+  // has no identity, so an anonymous visitor still gets the viewer role — it
+  // now comes from the context layer rather than the auth adapter.
+  it('returns null for a missing token', async () => {
+    expect(await auth.resolve(null)).toBeNull();
   });
 
-  it('returns ANONYMOUS for unknown token', async () => {
-    const identity = await auth.resolve('bogus');
+  it('returns null for an unknown token', async () => {
+    expect(await auth.resolve('bogus')).toBeNull();
+  });
+
+  it('still resolves a known token to a non-anonymous identity', async () => {
+    const identity = await auth.resolve('delegate-1-token');
     expect(identity).not.toBeNull();
-    expect(isAnonymous(identity!)).toBe(true);
+    expect(isAnonymous(identity!)).toBe(false);
   });
 
   it('test accounts use google- prefixed IDs', () => {
