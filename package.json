@@ -7,7 +7,8 @@
     "dev": "next dev -p 3847",
     "build": "next build",
     "start": "next start -p 3847",
-    "lint": "eslint . && prettier --check ."
+    "lint": "eslint . && prettier --check .",
+    "test": "vitest run"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",
@@ -17,11 +18,11 @@
     "@opentelemetry/sdk-node": "^0.221.0",
     "@verevoir/access": "^2.1.2",
     "@verevoir/assets": "^1.1.2",
+    "@verevoir/bookings": "^1.1.1",
+    "@verevoir/commerce": "^1.1.1",
     "@verevoir/editor": "^1.10.2",
     "@verevoir/editor-premium": "^1.1.0",
     "@verevoir/media": "^1.1.1",
-    "@verevoir/bookings": "^1.1.1",
-    "@verevoir/commerce": "^1.1.1",
     "@verevoir/schema": "^1.5.3",
     "@verevoir/storage": "^1.1.3",
     "google-auth-library": "^10.9.1",
